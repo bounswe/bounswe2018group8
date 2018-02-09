@@ -1,2 +1,14 @@
-# bounswe2018group8
-Please visit our Wiki page [here.](https://github.com/bounswe/bounswe2018group8/wiki)
+# Welcome to bounswe2018group8 wiki!
+
+This repository is designed to be the main project environment for CmpE 352, Fundamentals of Software Engineering course at Boğaziçi University. Please visit our [Wiki page](https://github.com/bounswe/bounswe2018group8/wiki) for detailed information.
+
+## Group Members
+* Orkan Akısü
+* Semih Arı
+* İsmail Levent Baş
+* Abdullah Coşkun
+* İsmet Dağlı
+* Kübra Eryılmaz
+* Abdurrahim Eskin
+* Yaman Kındap
+* Eray Sezgin
