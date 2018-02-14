@@ -10,5 +10,6 @@ This repository is designed to be the main project environment for CmpE 352, Fun
 * İsmet Dağlı
 * Kübra Eryılmaz
 * Abdurrahim Eskin
+* Ahmet Selim Karaduman
 * Yaman Kındap
 * Eray Sezgin
