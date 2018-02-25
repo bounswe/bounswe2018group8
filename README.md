@@ -1,6 +1,10 @@
-# Welcome to bounswe2018group8 repository!
+# GRATEFUL 8
+Welcome to our repository.
 
-This repository is designed to be the main project environment for CmpE 352, Fundamentals of Software Engineering course at Boğaziçi University. Please visit our [Wiki page](https://github.com/bounswe/bounswe2018group8/wiki) for detailed information.
+## Description
+The main objective of this project is providing an environment for clients and freelancers to collaborate in a single platform. The clients may create their projects and jobs about programming, writing, design, development etc. and post the details on this platform to find  an  expert  on  such  topics.  The  freelancers  are  free  to  bid  on  these  projects until  a  certain deadline that is specifically determined by the client. After collecting these bids, the client may agree with one of these freelancers. The agreement includes details such as job completion deadline, total fee to be paid, payment options and so on. 
+
+
 
 ## Group Members
 * [Orkan Akısü](https://github.com/bounswe/bounswe2018group8/wiki/Orkan-Ak%C4%B1s%C3%BC)
@@ -13,3 +17,5 @@ This repository is designed to be the main project environment for CmpE 352, Fun
 * [Ahmet Selim Karaduman](https://github.com/bounswe/bounswe2018group8/wiki/Selim-Karaduman)
 * [Yaman Kındap](https://github.com/bounswe/bounswe2018group8/wiki/Yaman-K%C4%B1ndap)
 * Eray Sezgin
+#
+You can find more details about us on our [wiki page](https://github.com/bounswe/bounswe2018group8/wiki).
