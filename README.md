@@ -2,7 +2,7 @@
 Welcome to our repository.
 
 ## Description
-The main objective of this project is providing an environment for clients and freelancers to collaborate in a single platform. The clients may create their projects and jobs about programming, writing, design, development etc. and post the details on this platform to find  an  expert  on  such  topics.  The  freelancers  are  free  to  bid  on  these  projects until  a  certain deadline that is specifically determined by the client. After collecting these bids, the client may agree with one of these freelancers. The agreement includes details such as job completion deadline, total fee to be paid, payment options and so on. 
+The main objective of the project is providing an environment for clients and freelancers to collaborate in a single platform. The clients may create their projects and jobs about programming, writing, design, development etc. and post the details on this platform to find  an  expert  on  such  topics.  The  freelancers  are  free  to  bid  on  these  projects until  a  certain deadline that is specifically determined by the client. After collecting these bids, the client may agree with one of these freelancers. The agreement includes details such as job completion deadline, total fee to be paid, payment options and so on. 
 
 
 
