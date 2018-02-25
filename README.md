@@ -1,4 +1,4 @@
-# GRATEFUL 8
+# The GRATEFUL 8
 Welcome to our repository.
 
 ## Description
