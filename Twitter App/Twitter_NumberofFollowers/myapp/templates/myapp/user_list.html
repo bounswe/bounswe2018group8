@@ -1,0 +1,9 @@
+<div>
+    <h1>
+        <form method="POST" action="">{% csrf_token %}
+            Twitter Username: <input type="text" name="a">
+            <input type="submit" value="Submit">
+        </form>
+        Number of Followers: {{followersNum2}}
+    </h1>
+</div>
