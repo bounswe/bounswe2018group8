@@ -100,23 +100,8 @@ class SignupPage extends React.Component {
                     <p className={classes.divider}>Or Be Classical</p>
                     <CardBody>
                       <CustomInput
-                        labelText="First Name"
-                        id="first"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "text",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <People className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Surname"
-                        id="second"
+                        labelText="Username"
+                        id="username"
                         formControlProps={{
                           fullWidth: true
                         }}
