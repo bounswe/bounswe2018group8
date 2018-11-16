@@ -1,0 +1,11 @@
+/**
+ * @author Mehmet Calim
+ */
+.App {
+  margin-left: 20px;
+}
+
+input {
+  display: block;
+  margin: 5px 0 5px;
+}
