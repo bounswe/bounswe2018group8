@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Navbar,MenuItem,NavItem,NavDropdown,Button} from "react-bootstrap";
+import {Navbar,MenuItem,NavItem,NavDropdown,Button, Jumbotron} from "react-bootstrap";
+import CustomNavbar from "./CustomNavbar";
 
 
 function Nav(props) {
@@ -19,16 +20,17 @@ function Nav(props) {
           <a href="#home">GRATELANCER</a>
         </Navbar.Brand>
       </Navbar.Header>
-      <NavItem eventKey={1} href="#home">
-        Homepage
-      </NavItem>
-      <NavItem eventKey={2} href="#profile">
-        Profile
-      </NavItem>
-      <Navbar.Text>
-        Welcome <Navbar.Link href="#">Guest</Navbar.Link>
-      </Navbar.Text>
-      <Navbar.Text pullRight>Have a great day Guest!</Navbar.Text>
+        <NavItem eventKey={1} href="#home">
+          Homepage
+        </NavItem>
+        <NavItem eventKey={2} href="#profile">
+          Profile
+        </NavItem>
+        {/*
+        <Navbar.Text>
+          Welcome <Navbar.Link href="#">Guest</Navbar.Link>
+        </Navbar.Text>
+        <Navbar.Text pullRight>Have a great day Guest!</Navbar.Text>*/}
     </Navbar>
 
   );
@@ -53,7 +55,7 @@ function Nav(props) {
 
   return (
   <div>
-    {navBarInstance}
+    {/*{navBarInstance}*/}
     {props.logged_in ? logged_in_nav : logged_out_nav}
   </div>   
  );
