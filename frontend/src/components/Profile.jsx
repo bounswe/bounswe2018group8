@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 import './Profile.css';
 
 export default class Profile extends Component {

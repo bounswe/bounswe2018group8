@@ -2,7 +2,7 @@
  * @author Mehmet Calim
  */
 import React from 'react';
-import { Button, Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import PropTypes from 'prop-types';
 
 /* 

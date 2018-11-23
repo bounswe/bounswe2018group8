@@ -2,16 +2,11 @@
  * @author Mehmet Calim
  */
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Nav from './Nav';
-import Home from './Home';
-import Profile from './Profile';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
-import {Navbar,MenuItem,NavItem,NavDropdown, Jumbotron} from "react-bootstrap";
 import '../App.css';
-
-class Landing extends Component {
+class Landing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,6 +47,7 @@ class Landing extends Component {
                     displayed_form: '',
                     username: json.user.username
                 });
+                this.props.history.push('home');
             });
     };
 
@@ -77,6 +73,7 @@ class Landing extends Component {
                     displayed_form: '',
                     username: json.username
                 });
+                this.props.history.push('home');
             });
     };
 
@@ -105,9 +102,9 @@ class Landing extends Component {
         return (
             <div className="Landing">
                 <Nav
-                   logged_in={this.state.logged_in}
-                   display_form={this.display_form}
-                   handle_logout={this.handle_logout}
+                    logged_in={this.state.logged_in}
+                    display_form={this.display_form}
+                    handle_logout={this.handle_logout}
                 />
                 {form}
             </div>
