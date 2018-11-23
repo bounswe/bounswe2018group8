@@ -3,8 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Navbar,MenuItem,NavItem,NavDropdown,Button, Jumbotron} from "react-bootstrap";
-import CustomNavbar from "./CustomNavbar";
+import {Navbar,NavItem,Button} from "react-bootstrap";
 
 
 function Nav(props) {
