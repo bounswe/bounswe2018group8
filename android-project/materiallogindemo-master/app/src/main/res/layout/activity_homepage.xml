@@ -6,18 +6,29 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".HomepageActivity">
 
-    <TextView
+    <Button
         android:id="@+id/link_login"
-        android:layout_width="fill_parent"
+        android:layout_width="213dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="103dp"
         android:gravity="center"
-        android:text="Click to login."
+        android:text="Click to login"
         android:textSize="16dip"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentLeft="true" />
+
+    <SearchView
+        android:id="@+id/search_project"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:queryHint="Search projects"
+        android:text="Search projects" />
 
 </RelativeLayout>

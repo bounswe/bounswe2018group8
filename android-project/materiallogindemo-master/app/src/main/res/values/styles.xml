@@ -27,4 +27,7 @@
         <item name="android:background">@color/primary</item>
     </style>
 
+    <style name="generalnotitle" parent="AppTheme.Dark">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>
