@@ -10,7 +10,7 @@ import axios from 'axios';
   its validation was not created yet.
 */
 
-//mehmetcalim: I added 2 state fields:first_name and last_name.
+// @mehmetcalim: I added 2 state fields:first_name and last_name.
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
@@ -35,9 +35,8 @@ class SignupForm extends React.Component {
     });
   };
 
-  /*mehmetcalim: I added login request function here instead of Landing.js
+  // @mehmetcalim: I added register request function here instead of Landing.js
    and also used axios.
-  */
   submit(e) {
     e.preventDefault();
     axios.post('http://52.59.230.90/user/register/', {

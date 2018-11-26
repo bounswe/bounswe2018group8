@@ -30,7 +30,7 @@ class Landing extends React.Component {
         }
     }
     
-    //mehmetcalim: We will use this handle when the logut button will be added.
+    // @mehmetcalim: We will use this handle when the logut button will be added.
     handle_logout = () => {
         localStorage.removeItem('token');
         this.setState({ logged_in: false, username: '' });
@@ -42,10 +42,9 @@ class Landing extends React.Component {
             displayed_form: form
         });
     };
-    /*
-      I implemented login/signup with switch. It may change according to
-      final design.
-    */
+
+    // @mehmetcalim: I changed login/signup switch with seperate 2 login/register URLs and redirected to them.
+     
     render() {
         let form;
         switch (this.state.displayed_form) {

@@ -14,6 +14,7 @@ class LoginForm extends React.Component {
       password: ''
     };
   }  
+  
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -23,6 +24,9 @@ class LoginForm extends React.Component {
       return newState;
     });
   };
+
+  // @mehmetcalim: I added register request function here instead of Landing.js
+
   submit(e) {
     e.preventDefault();
     axios.post('http://52.59.230.90/user/login/', {
