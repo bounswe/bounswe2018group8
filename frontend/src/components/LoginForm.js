@@ -4,14 +4,16 @@
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Login.css';
-import PropTypes from 'prop-types';
+import axios from 'axios'
 
 class LoginForm extends React.Component {
-  state = {
-    username: '',
-    password: ''
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    };
+  }  
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -21,12 +23,25 @@ class LoginForm extends React.Component {
       return newState;
     });
   };
+  submit(e) {
+    e.preventDefault();
+    axios.post('http://52.59.230.90/user/login/', {
+      username: this.state.username,
+      password: this.state.password
+    }).then(res => {
+      localStorage.setItem('jwt', res.data);
+      this.props.history.push('/home')
+    }).catch(() => this.setState({
+
+      error: true
+    }));
+  }
 
   render() {
     return (
-      <form onSubmit={e => this.props.handle_login(e, this.state)}>
+      <form onSubmit={e => this.submit(e)}>
         <h4>Log In</h4>
-        <FormGroup controlId="username" bsSize="medium">
+        <FormGroup controlId="username">
             <ControlLabel>Username</ControlLabel>
             <FormControl
               autoFocus
@@ -37,7 +52,7 @@ class LoginForm extends React.Component {
               onChange={this.handle_change}
             />
         </FormGroup>
-        <FormGroup controlId="password" bsSize="medium">
+        <FormGroup controlId="password">
             <ControlLabel>Password</ControlLabel>
             <FormControl
               type="password"
@@ -48,7 +63,7 @@ class LoginForm extends React.Component {
               onChange={this.handle_change}
             />
         </FormGroup>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     );
   }
@@ -56,6 +71,3 @@ class LoginForm extends React.Component {
 
 export default LoginForm;
 
-LoginForm.propTypes = {
-  handle_login: PropTypes.func.isRequired
-};

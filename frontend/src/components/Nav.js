@@ -3,36 +3,12 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Navbar,NavItem,Button} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 
 function Nav(props) {
   const wellStyles = { maxWidth: 400, margin: '0 auto 0px' };
 
-  /*This constructor is designed for navigation page after
-    succesful login. Currently I implemented it to clarify design of homepage.   
-  */
-  const navBarInstance =(
-    <Navbar>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="#home">GRATELANCER</a>
-        </Navbar.Brand>
-      </Navbar.Header>
-        <NavItem eventKey={1} href="#home">
-          Homepage
-        </NavItem>
-        <NavItem eventKey={2} href="#profile">
-          Profile
-        </NavItem>
-        {/*
-        <Navbar.Text>
-          Welcome <Navbar.Link href="#">Guest</Navbar.Link>
-        </Navbar.Text>
-        <Navbar.Text pullRight>Have a great day Guest!</Navbar.Text>*/}
-    </Navbar>
-
-  );
   const logged_in_nav = (
     <ul>
       <li onClick={props.handle_logout}>logout</li>
