@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     });
   };
 
-  // @mehmetcalim: I added register request function here instead of Landing.js
+  // @mehmetcalim: I added login request function here instead of Landing.js
 
   submit(e) {
     e.preventDefault();
