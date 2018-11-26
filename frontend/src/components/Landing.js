@@ -18,7 +18,7 @@ class Landing extends React.Component {
 
     componentDidMount() {
         if (this.state.logged_in) {
-            fetch('https://mehmet.requestcatcher.com/', {
+            fetch('http://52.59.230.90/current_user/', {
                 headers: {
                     Authorization: `JWT ${localStorage.getItem('token')}`
                 }
