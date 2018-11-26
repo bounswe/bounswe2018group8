@@ -24,6 +24,7 @@ class LogoutViewEx(LogoutView):
 class ProjectDetailsView(generics.RetrieveAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class ProjectUpdateView(UserPassesTestMixin,generics.UpdateAPIView):
     def test_func(self):
@@ -76,3 +77,4 @@ class ProjectListView(generics.ListAPIView):
 class HomepageView(generics.ListAPIView):
     serializer_class = ProjectSerializer
     queryset = Project.objects.all().order_by('-id')
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
