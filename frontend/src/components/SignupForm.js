@@ -35,8 +35,8 @@ class SignupForm extends React.Component {
     });
   };
 
-  // @mehmetcalim: I added register request function here instead of Landing.js
-   and also used axios.
+  // @mehmetcalim: I added register request function here instead of Landing.js and also used axios.
+   
   submit(e) {
     e.preventDefault();
     axios.post('http://52.59.230.90/user/register/', {
