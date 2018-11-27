@@ -36,7 +36,6 @@ class LoginForm extends React.Component {
       localStorage.setItem('jwt', res.data);
       this.props.history.push('/home')
     }).catch(() => this.setState({
-
       error: true
     }));
   }
