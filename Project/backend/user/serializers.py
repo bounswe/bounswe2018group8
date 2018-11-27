@@ -2,11 +2,11 @@
 from rest_framework import serializers
 from rest_auth.serializers import UserDetailsSerializer
 from rest_auth.registration.serializers import RegisterSerializer
-from .models import User, Client, Freelancer, Skill, Project, Bid
+from .models import User, Client, Freelancer, Skill
+from project.models import Project
 from django.conf import settings
 from .validators import FirstNameValidator, LastNameValidator, SkillValidator
 
-# Author: Umut Barış Öztunç, Ozan Kınasakal
 
 class RegisterSerializer(RegisterSerializer):
 
@@ -68,16 +68,13 @@ class FreelancerSerializer(serializers.ModelSerializer):
 
 class UserSerializer(UserDetailsSerializer):
     projects = serializers.PrimaryKeyRelatedField(many=True, queryset=Project.objects.all())
+    client = ClientSerializer(required=False, allow_null=True)
+    freelancer = FreelancerSerializer(required=False, allow_null=True)
+    
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('is_client', 'bio','projects',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('pk', 'username', 'is_client','projects',)
+        fields = UserDetailsSerializer.Meta.fields + ('is_client', 'bio','projects', 'client', 'freelancer',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('pk', 'username', 'is_client', 'projects',)
 
-    def __init__(self, *args, **kwargs):
-        super(UserSerializer, self).__init__(*args, **kwargs)
-        if self.instance.is_client:
-            self.fields['profile'] = ClientSerializer(source='client')
-        else:
-            self.fields['profile'] = FreelancerSerializer(source='freelancer')
 
     def update(self, instance, validated_data):
         if instance.is_client:
@@ -98,18 +95,3 @@ class UserSerializer(UserDetailsSerializer):
         return instance
 
 
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = "__all__"
-        read_only_fields =('client',)
-
-class ProjectCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        exclude = ('client','freelancer','status',)
-
-class BidSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Bid
-        fields = "__all__"
