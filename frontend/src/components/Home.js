@@ -1,3 +1,6 @@
+/**
+ * @author Mehmet Calim, Kübra Eryılmaz
+ */
 import React from 'react';
 import { Grid } from 'react-bootstrap';
 import axios from 'axios';
@@ -49,7 +52,7 @@ export default class Home extends React.Component {
                 })
               ) : (
                 <p>Loading...</p>
-              )}
+            )}
             </div>
           </React.Fragment>
         );

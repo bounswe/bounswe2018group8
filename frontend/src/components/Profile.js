@@ -1,3 +1,6 @@
+/**
+ * @author Mehmet Calim, Kübra Eryılmaz
+ */
 import React, {Component, PropTypes} from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
@@ -8,15 +11,14 @@ export default class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            profile: [],
-            logged_in: localStorage.getItem('token') ? true : false,
-            username: '',
+            user: '',
             isLoading: true,
             errors: null
         }
       }
+    // @mehmetcalim: Get API request is added in order to get current user data. 
     componentDidMount() {
-        axios.get("http://52.59.230.90/user/current", {
+        axios.get("http://52.59.230.90/user/current/", {
             headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`
             }
@@ -24,39 +26,34 @@ export default class Profile extends Component {
             .then(res => {
                 console.log(res);
                 this.setState({
-                    profile:res.data,
+                    user:JSON.parse(localStorage.getItem('user')),
                     isLoading: false,
-                    username: res.username
+                    isUser: true,
                 });
             })
             .catch(error => this.setState({ error, isLoading: false })); 
     }
     render() {
-        const { isLoading, profile } = this.state;
+        const { isLoading, user } = this.state;
         return (
           <React.Fragment>
             <h2><b>User Profile</b></h2>
             <hr/>
             <div>
-              {!isLoading ? (
-                profile.map(user_profile => {
-                    const { pk, username, email, first_name, last_name, is_client,
-                        bio, projects, profile} = user_profile;
-                  return (
-                    <div key={pk}>
-                        <p><b>Name: </b>{first_name}</p>
-                        <p><b>Surname: </b>{last_name}</p>
-                        <p><b>Username: </b>{username}</p>
-                        <p><b>Bio: </b>{bio}</p>
-                        <p><b>Projects: </b>{projects}</p>
-                        <p><b>Skills: </b>{profile}</p>
+                {!isLoading ? (
+                    <div key={user.pk}>
+                        <p><b>Name: </b>{user.first_name}</p>
+                        <p><b>Surname: </b>{user.last_name}</p>
+                        <p><b>Email: </b>{user.email}</p>
+                        <p><b>username: </b>{user.username}</p>
+                        <p><b>Bio: </b>{user.bio}</p>
+                        <p><b>Projects: </b>{user.projects}</p>
+                        <p><b>Skills: </b>{user.skills}</p>
                         <hr/>
-                    </div>
-                  );
-                })
-              ) : (
+                        </div>
+                ) : (
                 <p>Loading...</p>
-              )}
+            )}
             </div>
           </React.Fragment>
         );

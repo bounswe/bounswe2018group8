@@ -33,7 +33,8 @@ class LoginForm extends React.Component {
       username: this.state.username,
       password: this.state.password
     }).then(res => {
-      localStorage.setItem('jwt', res.data);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       this.props.history.push('/home')
     }).catch(() => this.setState({
       error: true

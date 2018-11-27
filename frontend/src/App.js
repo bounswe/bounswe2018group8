@@ -1,5 +1,5 @@
 /**
- * @author Kübra Eryılmaz
+ * @author Mehmet Calim, Kübra Eryılmaz
  */
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';

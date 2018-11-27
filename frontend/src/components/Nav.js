@@ -11,7 +11,7 @@ function Nav(props) {
 
   const logged_in_nav = (
     <ul>
-      <li onClick={props.handle_logout}>logout</li>
+      <li onClick={props.handle_logout}><button type="submit" className="btn btn-primary">Logout</button></li>
     </ul>
   );
 
@@ -30,7 +30,6 @@ function Nav(props) {
 
   return (
   <div>
-    {/*{navBarInstance}*/}
     {props.logged_in ? logged_in_nav : logged_out_nav}
   </div>   
  );

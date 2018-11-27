@@ -15,20 +15,6 @@ class Landing extends React.Component {
             username: ''
         };
     }
-
-    componentDidMount() {
-        if (this.state.logged_in) {
-            fetch('http://52.59.230.90/current_user/', {
-                headers: {
-                    Authorization: `JWT ${localStorage.getItem('token')}`
-                }
-            })
-                .then(res => res.json())
-                .then(json => {
-                    this.setState({ username: json.username });
-                });
-        }
-    }
     
     // @mehmetcalim: We will use this handle when the logut button will be added.
     handle_logout = () => {
