@@ -1,5 +1,5 @@
 nav.navbar, .navbar-default {
-    background-color: #2892D7 !important;
+    background-color: #b16e6e !important;
 }
 
 .navbar-default {
@@ -14,6 +14,7 @@ nav.navbar, .navbar-default {
 
 .navbar-default .navbar-brand {
     color: white;
+    padding: 5px 10px 15px 0px
 }
 
 .navbar-default .navbar-toggle {

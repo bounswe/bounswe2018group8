@@ -31,6 +31,12 @@
     margin-bottom: 10px;
 }
 
+#form{
+	background: #ffbdbd;
+	padding: 30px 84px;
+	border-radius: 10px;
+}
+
 .form-item{
     font-family: 'Raleway', sans-serif;
     padding: 5px;
@@ -38,6 +44,10 @@
     height: 30px;
     width: 16rem;
     border: 1px solid grey;
+}
+
+.form-group{
+  margin: 16px 0;
 }
 
 .form-submit{
@@ -52,4 +62,8 @@
 }
 .form-submit:hover{
    opacity: 0.6;
+}
+
+.btn-primary{
+  background-color: #7ccbff
 }

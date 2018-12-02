@@ -25,34 +25,41 @@ export default class Home extends React.Component {
                     isLoading: false
                 });
             })
-            .catch(error => this.setState({ error, isLoading: false })); 
+            .catch(error => this.setState({ error, isLoading: false }));
     }
     render() {
         const { isLoading, projects } = this.state;
         return (
           <React.Fragment>
-            <h2><b>Hello, This is Gratelancer!</b></h2>
-            <hr/>
-            <div>
-              {!isLoading ? (
-                projects.map(project => {
-                    const { id, title, description, deadline, max_price, min_price,
-                        status, client, freelancer} = project;
-                  return (
-                    <div key={id}>
-                        <p><b>Project Title: </b>{title}</p>
-                        <p><b>Project Description: </b>{description}</p>
-                        <p><b>Project Deadline: </b>{deadline}</p>
-                        <p><b>Project Max Price Limit: </b>{max_price}</p>
-                        <p><b>Project Min Price Limit: </b>{min_price}</p>
-                        <p><b>Project Status: </b>{status}</p>
-                        <hr/>
-                    </div>
-                  );
-                })
-              ) : (
-                <p>Loading...</p>
-            )}
+            <div className="row">
+              <div className="col-md-2"></div>
+              <div className="col-md-8" id="feed">
+                <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" />
+                <hr/>
+
+                  {!isLoading ? (
+                    projects.map(project => {
+                        const { id, title, description, deadline, max_price, min_price,
+                            status, client, freelancer} = project;
+                      return (
+                        <div key={id} className="project">
+                            <p><b>{title}</b></p>
+                            <img src="/assets/freelancer1.jpg" className="img-responsive center-block" alt="project-image" />
+
+                            <p><b>Description: </b>{description}</p>
+                            <p><b>Deadline: </b>{deadline}</p>
+                            <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
+                            <p><b>Status: </b>{status}</p>
+
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p>Loading...</p>
+                )}
+
+              </div>
+              <div className="col-md-2"></div>
             </div>
           </React.Fragment>
         );

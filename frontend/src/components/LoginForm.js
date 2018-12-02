@@ -13,8 +13,8 @@ class LoginForm extends React.Component {
       username: '',
       password: ''
     };
-  }  
-  
+  }
+
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -43,35 +43,41 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={e => this.submit(e)}>
-        <h4>Log In</h4>
-        <FormGroup controlId="username">
-            <ControlLabel>Username</ControlLabel>
-            <FormControl
-              autoFocus
-              type="text"
-              name="username"
-              placeholder="Enter your username"
-              value={this.state.username}
-              onChange={this.handle_change}
-            />
-        </FormGroup>
-        <FormGroup controlId="password">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              type="password"
-              name="password"
-              minLength="8"
-              placeholder="Enter your password"
-              value={this.state.password}
-              onChange={this.handle_change}
-            />
-        </FormGroup>
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+    <div className="row">
+      <div className="col-md-4"></div>
+      <div className="col-md-4" id="form">
+        <form onSubmit={e => this.submit(e)}>
+          <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" />
+
+          <FormGroup controlId="username">
+              <ControlLabel>Username</ControlLabel>
+              <FormControl
+                autoFocus
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                value={this.state.username}
+                onChange={this.handle_change}
+              />
+          </FormGroup>
+          <FormGroup controlId="password">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                type="password"
+                name="password"
+                minLength="8"
+                placeholder="Enter your password"
+                value={this.state.password}
+                onChange={this.handle_change}
+              />
+          </FormGroup>
+          <button type="submit" className="btn btn-primary btn-block">Log In</button>
+        </form>
+        </div>
+        <div className="col-md-4"></div>
+      </div>
     );
   }
 }
 
 export default LoginForm;
-

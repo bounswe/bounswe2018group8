@@ -8,8 +8,9 @@ export default class CustomNavbar extends Component {
         return(
            <Navbar>
                <Navbar.Header>
+                   <Navbar.Toggle/>
                    <Navbar.Brand>
-                       <Link to="/">Gratelancer</Link>
+                       <Link to="/"><img src="/assets/gratelancer2.png" className="img-responsive navbar-brand" alt="gratelancer-logo" /></Link>
                    </Navbar.Brand>
                    <Navbar.Toggle/>
                </Navbar.Header>
