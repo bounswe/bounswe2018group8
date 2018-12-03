@@ -105,7 +105,7 @@ public class ProjectCreationActivity extends AppCompatActivity {
         jsonToPost.put("deadline", deadline);
 
         HttpPostAsyncTask myTask= new HttpPostAsyncTask(jsonToPost,this,token);
-        String theResponse = myTask.execute("http://52.59.230.90/user/projects/create/").get(); //TODO:change the link!
+        String theResponse = myTask.execute("http://52.59.230.90/projects/").get(); //TODO:change the link!
         statusCode = Integer.parseInt(theResponse.substring(0, 3));
         response = theResponse.substring(3);
         progressDialog.dismiss();
@@ -168,19 +168,21 @@ public class ProjectCreationActivity extends AppCompatActivity {
             _maxPrice.setError("maximum price cannot be empty.");
             valid = false;
         }
-        else if(Integer.parseInt(maxPrice)<Integer.parseInt(minPrice)){
-            _maxPrice.setError("Maximum price cannot be less than minimum price.");
-        }
-        else {
-            _maxPrice.setError(null);
-        }
-        if (minPrice.isEmpty()) {
-            _maxPrice.setError("minimum price cannot be empty.");
+        else if (minPrice.isEmpty()) {
+            _minPrice.setError("minimum price cannot be empty.");
             valid = false;
         }
+        else if(Integer.parseInt(maxPrice)<Integer.parseInt(minPrice)){
+            valid = false;
+            _maxPrice.setError("Maximum price cannot be less than minimum price.");
+            _minPrice.setError("Minimum price cannot be greater than maximum price.");
+        }
         else {
             _maxPrice.setError(null);
+            _minPrice.setError(null);
+
         }
+
         if (deadline.isEmpty()) {
             _deadline.setError("enter a deadline.");
             valid = false;

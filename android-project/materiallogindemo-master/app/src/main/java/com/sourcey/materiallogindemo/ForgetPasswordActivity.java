@@ -31,6 +31,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     static String response="";
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.btn_sendpw) Button _sendpw;
+    @BindView(R.id.link_login) TextView _loginLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,16 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        _loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the registration screen and return to the Login activity
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
     }
