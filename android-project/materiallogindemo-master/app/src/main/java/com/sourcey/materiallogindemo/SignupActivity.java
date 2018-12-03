@@ -18,16 +18,31 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-
+    static String response;
+    static int statusCode;
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_first_name) EditText _firstnameText;
@@ -38,7 +53,6 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.link_login) TextView _loginLink;
     @BindView(R.id.input_userType) Spinner _isClient;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +62,15 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                try {
+                    signup();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -66,13 +88,14 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Disable going back to the MainActivity
-        moveTaskToBack(true);
+        super.onBackPressed();  // optional depending on your needs
     }
-    public void signup() {
+    public void signup() throws JSONException, ExecutionException, InterruptedException {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onSignupFailed();
+            Toast.makeText(getBaseContext(), "Registration failed", Toast.LENGTH_LONG).show();
+            _signupButton.setEnabled(true);
             return;
         }
 
@@ -92,61 +115,73 @@ public class SignupActivity extends AppCompatActivity {
         final String reEnterPassword = _reEnterPasswordText.getText().toString();
         final String firstName= _firstnameText.getText().toString();
         final String lastName= _lastnameText.getText().toString();
-        final String isClient= _isClient.toString();
+        final String isClient= _isClient.getSelectedItem().toString();
+        boolean is_client=false;
+        if(isClient.equals("Client")){
+            is_client=true;
+        }
+
         // TODO: Implement your own signup logic here.
 
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://52.59.230.90/user/register/";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("asd",response);
-                //This code is executed if the server responds, whether or not the response contains data.
-                //The String 'response' contains the server's response.
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("username", name); //Add the data you'd like to send to the server.
-                MyData.put("email", email); //Add the data you'd like to send to the server.
-                MyData.put("password2", reEnterPassword); //Add the data you'd like to send to the server.
-                MyData.put("password1", password); //Add the data you'd like to send to the server.
-                MyData.put("first_name", firstName); //Add the data you'd like to send to the server.
-                MyData.put("last_name", lastName); //Add the data you'd like to send to the server.
-                MyData.put("is_client", "false");
-                return MyData;
-            }
-        };
-        MyRequestQueue.add(MyStringRequest);
+        JSONObject jsonToPost = new JSONObject();
+        jsonToPost.put("username", name);
+        jsonToPost.put("password1", password);
+        jsonToPost.put("password2", reEnterPassword);
+        jsonToPost.put("email", email);
+        jsonToPost.put("first_name", firstName);
+        jsonToPost.put("last_name", lastName);
+        jsonToPost.put("is_client", is_client);
 
-        new android.os.Handler().postDelayed(
+
+        HttpPostAsyncTask myTask= new HttpPostAsyncTask(jsonToPost,this, "");
+        String theResponse = myTask.execute("http://52.59.230.90/register/").get();
+        statusCode = Integer.parseInt(theResponse.substring(0, 3));
+        response = theResponse.substring(3);
+        progressDialog.dismiss();
+        _signupButton.setEnabled(true);
+        Log.d("Burasiii", "my email is: " + email + " my pw is: " + password + " response is:" + response);
+        if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+            onSignupFailed();
+        }
+        else if(statusCode==HttpURLConnection.HTTP_CREATED){
+            onSignupSuccess();
+
+        }
+
+ /*       new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
                         onSignupSuccess();
-                        // onSignupFailed();
+                        onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
     public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        Toast.makeText(getApplicationContext(), "New account created.", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        String str="";
+        String field=response.substring(2,response.indexOf("\":"));
 
-        _signupButton.setEnabled(true);
+        try {
+            str = JSONArrayToString(response, field); //Getting error field: Non-field-errors etc...
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(getApplicationContext(), field+"\n"+str, Toast.LENGTH_LONG).show();
     }
 
     public boolean validate() {
@@ -188,14 +223,14 @@ public class SignupActivity extends AppCompatActivity {
             _mobileText.setError(null);
         }
 */
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 8) {
+            _passwordText.setError("minimum 8 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);
         }
 
-        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
+        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 8  || !(reEnterPassword.equals(password))) {
             _reEnterPasswordText.setError("Password Do not match");
             valid = false;
         } else {
@@ -203,5 +238,11 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+    public String JSONArrayToString(String str,String field) throws JSONException, IOException {
+        JsonElement jelement = new JsonParser().parse(str);
+        JsonObject jobject = jelement.getAsJsonObject();
+        JsonArray jarray = jobject.getAsJsonArray(field);
+        return jarray.get(0).toString();
     }
 }
