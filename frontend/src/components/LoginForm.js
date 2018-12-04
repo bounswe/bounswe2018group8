@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
 
   submit(e) {
     e.preventDefault();
-    axios.post('http://52.59.230.90/user/login/', {
+    axios.post('http://52.59.230.90/login/', {
       username: this.state.username,
       password: this.state.password
     }).then(res => {

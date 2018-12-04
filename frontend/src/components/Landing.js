@@ -1,9 +1,10 @@
 /**
  * @author Mehmet Calim
  */
-import React, { Component } from 'react';
+import React from 'react';
 import  { Redirect } from 'react-router-dom'
 import Nav from './Nav';
+import axios from 'axios';
 import './SignupForm.css';
 
 class Landing extends React.Component {
@@ -18,7 +19,17 @@ class Landing extends React.Component {
 
     // @mehmetcalim: We will use this handle when the logut button will be added.
     handle_logout = () => {
+        console.log('JWT ' + localStorage.getItem('token'));
+        axios.post("http://52.59.230.90/logout/",{
+            headers: {
+                'Authorization': 'JWT ' + localStorage.getItem('token')
+            }
+        }).catch(error => {
+            console.log(error.response)
+        })
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.props.history.push('/home')
         this.setState({ logged_in: false, username: '' });
     };
 

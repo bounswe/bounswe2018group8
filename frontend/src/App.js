@@ -8,8 +8,10 @@ import Profile from './components/Profile';
 import Landing from './components/Landing';
 import Login from './components/LoginForm';
 import Register from './components/SignupForm';
+import Project from './components/Project';
 import './App.css';
 import CustomNavbar from "./components/CustomNavbar";
+import ClientProfile from './components/ClientProfile';
 
 
 /*
@@ -29,6 +31,8 @@ class App extends Component {
               <Route path="/home" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route path="/project" component={Project} />
+              <Route path="/user" component={ClientProfile} />
             </div>
           </Router>
       </div>
