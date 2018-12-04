@@ -42,7 +42,7 @@ class RegisterSerializer(RegisterSerializer):
         cleaned_data['last_name'] = self.validated_data.get('last_name', '')
         cleaned_data['is_client'] = self.validated_data.get('is_client', '')
         return cleaned_data
-
+        
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,45 +53,49 @@ class SkillSerializer(serializers.ModelSerializer):
         }
 
 
-class ClientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Client
-        fields = ()
-
-
-class FreelancerSerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(many=True)
-    class Meta:
-        model = Freelancer
-        fields = ('skills',)
-
-
 class UserSerializer(UserDetailsSerializer):
-    projects = serializers.PrimaryKeyRelatedField(many=True, queryset=Project.objects.all())
-    client = ClientSerializer(required=False, allow_null=True)
-    freelancer = FreelancerSerializer(required=False, allow_null=True)
+
+    skills = SkillSerializer(
+        many=True,
+        source='freelancer.skills'
+    )
     
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('is_client', 'bio','projects', 'client', 'freelancer',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('pk', 'username', 'is_client', 'projects',)
+        fields = UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('pk', 'username', 'email', 'is_client',)
 
-
-    def update(self, instance, validated_data):
-        if instance.is_client:
-            profile_data = validated_data.pop('client', {})
-            instance = super(UserSerializer, self).update(instance, validated_data)
+    def to_representation(self, instance):
+        ret = super(UserSerializer, self).to_representation(instance)
+        if ret['is_client']:
+            del ret['skills']
         else:
-            profile_data = validated_data.pop('freelancer', {})
-            instance = super(UserSerializer, self).update(instance, validated_data)
+            ret['skills'] = [skill['name'] for skill in ret['skills']]
+        return ret
+        
+    def to_internal_value(self, data):
+        if data['skills']:
+            skills = []
+            for skill in data['skills']:
+                skills.append({'name': skill})
+            data['skills'] = skills
+        return super(UserSerializer, self).to_internal_value(data)
+        
+                
+    
+    def update(self, instance, validated_data):
+        freelancer = validated_data.pop('freelancer', None)
+        instance = super(UserSerializer, self).update(instance, validated_data)
+        if not instance.is_client:
             instance.freelancer.skills.clear()
-            skills_data = profile_data.get('skills', {})
-            for skill_data in skills_data:
-                skill_name = skill_data['name'].lower()
-                try:
-                    skill = Skill.objects.get(name=skill_name)
-                except Skill.DoesNotExist:
-                    skill = Skill.objects.create(name=skill_name)
-                instance.freelancer.skills.add(skill)
+            for skill in freelancer.get('skills', {}):
+                name = skill.get('name')
+                if name:
+                    try:
+                        s = Skill.objects.get(name=name)
+                    except:
+                        s = Skill.objects.create(name=name)
+                    instance.freelancer.skills.add(s)
         return instance
+
 
 

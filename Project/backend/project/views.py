@@ -6,6 +6,7 @@ from rest_framework import generics
 from .models import Project
 from .serializers import ProjectSerializer, ProjectCreateSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+from django.db.models import Q
 
 class BaseManageView(APIView):
     """
@@ -79,3 +80,14 @@ class ProjectListManageView(BaseManageView):
         'POST': ProjectCreateView.as_view,
         'GET' : ProjectListView.as_view
     }
+
+
+# Search projects by a keyword
+# Author: Umut Baris Oztunc
+class ProjectSearchView(generics.ListAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.AllowAny,)
+    
+    def get_queryset(self):
+        keyword = self.kwargs['keyword']
+        return Project.objects.filter(Q(description__icontains=keyword) | Q(title__icontains=keyword))
