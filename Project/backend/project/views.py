@@ -61,7 +61,7 @@ class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin, generics.CreateA
     serializer_class = ProjectCreateSerializer
 
     def perform_create(self, serializer):
-        serializer.save(client=self.request.user)
+        serializer.save(client=self.request.user.client)
         serializer.save(status='active')
 
 class MyProjectsView(generics.ListAPIView):
@@ -87,7 +87,7 @@ class ProjectListManageView(BaseManageView):
 class ProjectSearchView(generics.ListAPIView):
     serializer_class = ProjectSerializer
     permission_classes = (permissions.AllowAny,)
-    
+
     def get_queryset(self):
         keyword = self.kwargs['keyword']
         return Project.objects.filter(Q(description__icontains=keyword) | Q(title__icontains=keyword))

@@ -1,7 +1,7 @@
 import os
 import configparser
 
-URL_FRONT = 'http://localhost:3000/'
+URL_FRONT = 'localhost:3000'
 
 # Configuration created by Umut Barış Öztunç
 config = configparser.RawConfigParser()
@@ -138,7 +138,7 @@ STATIC_URL = '/static/'
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = [URL_FRONT]
+CORS_ORIGIN_WHITELIST = [URL_FRONT,'3.120.207.89']
 
 AUTH_USER_MODEL = 'user.User'
 

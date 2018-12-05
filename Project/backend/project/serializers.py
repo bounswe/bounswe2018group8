@@ -1,13 +1,15 @@
 # Created by Ozan Kınasakal
 from rest_framework import serializers
 from .models import Project, Bid
+from user.serializers import UserSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
+    username = serializers.CharField(source='client.user.username')
+    class Meta():
         model = Project
-        fields = "__all__"
-        read_only_fields =('client',)
+        fields = '__all__'
+        read_only_fields =('client','username',)
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
     class Meta:
