@@ -5,11 +5,11 @@ from user.serializers import UserSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='client.user.username')
+    owner = serializers.CharField(source='client.user.username')
     class Meta():
         model = Project
         fields = '__all__'
-        read_only_fields =('client','username',)
+        read_only_fields =('client','owner',)
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
     class Meta:
