@@ -54,15 +54,19 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(UserDetailsSerializer):
-
     skills = SkillSerializer(
         many=True,
         source='freelancer.skills'
     )
     
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('pk', 'username', 'email', 'is_client',)
+        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('username', 'email', 'is_client',)
+        
+    def __init__(self, *args, **kwargs):
+        super(UserSerializer, self).__init__(args, kwargs)
+        print(self.fields['pk'])
+        del self.fields['pk']
 
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)
