@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom';
 import './Profile.css';
 import axios from 'axios';
-import {userID} from './Home';
 
 export default class ClientProfile extends Component {
     constructor() {
@@ -14,22 +13,26 @@ export default class ClientProfile extends Component {
             user: '',
             isLoading: true,
             errors: null,
+            user_id: '',
         }
-      }
+    } 
     // @mehmetcalim: Get API request is added in order to get current user data.
     componentDidMount() {
-        axios.get("http://52.59.230.90/users/"+ 5 , {
-            headers: {
-                Authorization: `JWT ${localStorage.getItem('token')}`
-            }
-        })
-            .then(res => {
-                this.setState({
-                    user: res.data,
-                    isLoading: false,
-                });
+        if(localStorage.getItem('token')!= null){
+            this.user_id = this.props.match.params.id;
+            axios.get("http://52.59.230.90/users/"+ this.user_id , {
+                headers: {
+                    Authorization: `JWT ${localStorage.getItem('token')}`
+                }
             })
-            .catch(error => this.setState({ error, isLoading: false }));
+                .then(res => {
+                    this.setState({
+                        user: res.data,
+                        isLoading: false,
+                    });
+                })
+                .catch(error => this.setState({ error, isLoading: false }));
+        }
     }
     render() {
         if(localStorage.getItem('token')== null){
@@ -37,7 +40,6 @@ export default class ClientProfile extends Component {
         }    
         else{
             const { isLoading, user } = this.state;
-            console.log(userID);
             return (
             <React.Fragment>
                 <div className="row">

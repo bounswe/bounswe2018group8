@@ -3,11 +3,10 @@
  */
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import  { Redirect } from 'react-router-dom';
+import  { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './Home.css';
-export var {userID} = '';
 
 export default class Home extends React.Component {
     constructor() {
@@ -16,12 +15,7 @@ export default class Home extends React.Component {
             projects: [],
             isLoading: true,
             errors: null,
-            user: '',
-            username: '',
-        }
-        this.callUser = this.callUser.bind(this);
-        this.redirectToProfile = this.redirectToProfile.bind(this);
-        
+        }        
     }
     componentDidMount() {
         axios.get("http://52.59.230.90/projects")
@@ -34,28 +28,10 @@ export default class Home extends React.Component {
             .catch(error => this.setState({ error, isLoading: false }));
     }
 
-    callUser(userID){
-        axios.get("http://52.59.230.90/users/" + userID, {
-            headers: {
-                Authorization: `JWT ${localStorage.getItem('token')}`
-            }
-        })
-            .then(res => {
-                this.setState({
-                    user: res.data.username,
-                    isLoading: false,
-                });
-            })
-            .catch(error => this.setState({ error, isLoading: false }));
-            const {user} = this.state;
-        return user;
-    }
-    redirectToProfile(){
-        this.props.history.push('/home');
-    }
     render() {
         const { isLoading, projects } = this.state;
-        var clientname = '';
+        var clientname;
+        var url;
         return (
           <React.Fragment>
             <div className="row">
@@ -72,25 +48,21 @@ export default class Home extends React.Component {
                     <hr/>                
                     {!isLoading ? (
                         projects.map(project => {
-                            const { id, title, description, deadline, max_price, min_price,
-                                status, client, freelancer} = project;
+                            const { id, client_id, client_username, freelancer_id, freelancer_username, status, title,
+                                description, max_price, min_price, deadline} = project;
                             if(localStorage.getItem('token')!= null){
-                                clientname=this.callUser(client);
-                                userID = client;
+                                clientname=client_username;
+                                url="{`/user/${client_id}`}";
                             }
                             else{
                                 clientname="(login to see who is the owner of this project)"
+                                url="/";
                             } 
                         return (
                             <div key={id} className="project">
                                 <p><b>{title}</b></p>
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
-                                <p><b>
-                                    <Button bsStyle="success" href="/user">
-                                        Client profile
-                                    </Button> 
-                                </b></p>
-                                <p><b>Project's owner: </b>{clientname}</p>
+                                <p><b>Project's owner: </b><Link to={`/user/${client_id}`}>{clientname}</Link></p>
                                 <p><b>Description: </b>{description}</p>
                                 <p><b>Deadline: </b>{deadline}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>

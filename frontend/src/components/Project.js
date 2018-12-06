@@ -6,21 +6,16 @@ import {FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import  { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './Project.css';
-import currentUser from './Profile.js';
 
 class Project extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
       title: '',
       description: '',
       deadline: '',
       max_price: '',
       min_price: '',
-      status: 'false',
-      client: currentUser.userID,
-      freelancer: 'null'
     };
     this.headers = {
         'Content-Type': 'application/json',
@@ -32,9 +27,6 @@ class Project extends React.Component {
             deadline: this.state.deadline,
             max_price: this.state.max_price,
             min_price: this.state.min_price,
-            status: false,
-            client: this.state.client,
-            freelancer: null
     };
   }
 
@@ -53,27 +45,25 @@ class Project extends React.Component {
 
   submit(e) {
     e.preventDefault();
-    console.log(localStorage.getItem('token'));
-    console.log(this.state.client);
-    console.log(currentUser.userID);
-    axios.post('http://52.59.230.90/projects/',{
-        params: {
-            title: this.state.title,
-            description: this.state.description,
-            deadline: this.state.deadline,
-            max_price: this.state.max_price,
-            min_price: this.state.min_price,
+    axios.post('http://52.59.230.90/projects/', 
+        {
+        title: this.state.title,
+        description: this.state.description,
+        deadline: this.state.deadline,
+        max_price: this.state.max_price,
+        min_price: this.state.min_price,
         },
+        {
         headers: {
-            'Authorization': 'JWT ' + localStorage.getItem('token')
+            Authorization: `JWT ${localStorage.getItem('token')}`
         }
+        }).then(res => {
+      localStorage.setItem('project_info', res.data);
+      this.props.history.push('/home');
+    }).catch(() => this.setState({
 
-    }).then(res => {
-        localStorage.setItem('project_info', JSON.stringify(res.data));
-        this.props.history.push('/home');
-        console.log(res);
-    }
-    );
+      error: true
+    }));
   }
 
   render() {
