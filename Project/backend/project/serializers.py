@@ -14,7 +14,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta():
         model = Project
         exclude = ('client', 'freelancer',)
-        read_only_fields = ('pk', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username',)
+        read_only_fields = ('id', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username',)
         
     def create(self, validated_data):
         project = Project.objects.create(

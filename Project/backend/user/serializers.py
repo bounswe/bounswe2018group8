@@ -61,13 +61,12 @@ class UserSerializer(UserDetailsSerializer):
     
     class Meta(UserDetailsSerializer.Meta):
         fields = ('id',) + UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('username', 'email', 'is_client',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'is_client',)
         
     def __init__(self, *args, **kwargs):
-        super(UserSerializer, self).__init__(args, kwargs)
-        print(self.fields['pk'])
+        super(UserSerializer, self).__init__(*args, **kwargs)
         del self.fields['pk']
-
+        
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)
         if ret['is_client']:
