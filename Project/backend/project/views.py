@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework import generics
 from .models import Project
-from .serializers import ProjectSerializer, ProjectCreateSerializer
-from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+from .serializers import ProjectSerializer
 from django.db.models import Q
+from user.permissions import IsClient
 
 class BaseManageView(APIView):
     """
@@ -28,19 +28,15 @@ class ProjectDetailsView(generics.RetrieveAPIView):
     serializer_class = ProjectSerializer
     permission_classes = (permissions.AllowAny,)
 
-class ProjectUpdateView(LoginRequiredMixin,UserPassesTestMixin,generics.UpdateAPIView):
-    raise_exception = True
-    def test_func(self):
-        return (self.get_object().client_id == self.request.user.pk)
+class ProjectUpdateView(generics.UpdateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated, IsClient,)
 
-class ProjectDestroyView(UserPassesTestMixin,generics.DestroyAPIView):
-    raise_exception = True
-    def test_func(self):
-        return (self.get_object().client_id == self.request.user.pk)
+class ProjectDestroyView(generics.DestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated, IsClient,)
 
 
 class ProjectManageView(BaseManageView):
@@ -53,22 +49,10 @@ class ProjectManageView(BaseManageView):
 
 
 
-class ProjectCreateView(LoginRequiredMixin,UserPassesTestMixin, generics.CreateAPIView):
-    raise_exception = True
-    def test_func(self):
-        return self.request.user.is_client
-
-    serializer_class = ProjectCreateSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(client=self.request.user.client)
-        serializer.save(status='active')
-
-class MyProjectsView(generics.ListAPIView):
+class ProjectCreateView(generics.CreateAPIView):
     serializer_class = ProjectSerializer
-    def get_queryset(self):
-        user = self.request.user
-        return Project.objects.filter(client_id = user.pk)
+    permission_classes = (permissions.IsAuthenticated, IsClient,)
+
 
 class ProjectListView(generics.ListAPIView):
     serializer_class = ProjectSerializer
