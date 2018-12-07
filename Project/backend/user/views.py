@@ -6,8 +6,8 @@ from .models import User
 from .serializers import UserSerializer
 from django.db.models import Q
 
+
 # Extended the LogoutView from REST Auth module to make it only accessible by authenticated requests.
-# Added the custom ProjectViews using APIView's
 # Author: Umut Barış Öztunç
 class LogoutViewEx(LogoutView):
     """
@@ -18,18 +18,24 @@ class LogoutViewEx(LogoutView):
     permission_classes = (IsAuthenticated,)
 
 
-
+# Retrieve specific users by id.
+# Author: Umut Baris Oztunc
 class UserRetrieveView(RetrieveAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
     
+# List all users.
+# Author: Umut Baris Oztunc
 class UserListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+# Search users by name.
+# Author: Umut Baris Oztunc
 class UserSearchView(ListAPIView):
     permision_classes = (AllowAny,)
     serializer_class = UserSerializer
