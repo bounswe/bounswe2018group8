@@ -75,3 +75,12 @@ class ProjectSearchView(generics.ListAPIView):
     def get_queryset(self):
         keyword = self.kwargs['keyword']
         return Project.objects.filter(Q(description__icontains=keyword) | Q(title__icontains=keyword))
+
+
+class UserProjectsView(generics.ListAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.AllowAny,)
+    
+    def get_queryset(self):
+        user_id = self.kwargs['id']
+        return Project.objects.filter(client__user__id=user_id)
