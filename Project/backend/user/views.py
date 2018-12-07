@@ -43,7 +43,7 @@ class UserSearchView(ListAPIView):
     """
     Search users by name.
     """
-    permision_classes = (AllowAny,)
+    permission_classes = (AllowAny,)
     serializer_class = UserSerializer
     
     def get_queryset(self):
