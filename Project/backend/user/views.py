@@ -18,25 +18,31 @@ class LogoutViewEx(LogoutView):
     permission_classes = (IsAuthenticated,)
 
 
-# Retrieve specific users by id.
 # Author: Umut Baris Oztunc
 class UserRetrieveView(RetrieveAPIView):
+    """
+    Retrieve specific users by id.
+    """
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
     
-# List all users.
 # Author: Umut Baris Oztunc
 class UserListView(ListAPIView):
+    """
+    List all users.
+    """
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-# Search users by name.
 # Author: Umut Baris Oztunc
 class UserSearchView(ListAPIView):
+    """
+    Search users by name.
+    """
     permision_classes = (AllowAny,)
     serializer_class = UserSerializer
     

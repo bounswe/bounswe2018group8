@@ -66,9 +66,11 @@ class ProjectListManageView(BaseManageView):
     }
 
 
-# Search projects by a keyword.
 # Author: Umut Baris Oztunc
 class ProjectSearchView(generics.ListAPIView):
+    """
+    Search projects by a keyword.
+    """
     serializer_class = ProjectSerializer
     permission_classes = (permissions.AllowAny,)
 
@@ -77,9 +79,11 @@ class ProjectSearchView(generics.ListAPIView):
         return Project.objects.filter(Q(description__icontains=keyword) | Q(title__icontains=keyword))
 
 
-# List projects of a specific user.
 # Author: Umut Baris Oztunc
 class UserProjectsView(generics.ListAPIView):
+    """
+    List projects of a specific user.
+    """
     serializer_class = ProjectSerializer
     permission_classes = (permissions.AllowAny,)
     
@@ -88,9 +92,11 @@ class UserProjectsView(generics.ListAPIView):
         return Project.objects.filter(client__user__id=user_id)
         
         
-# List projects of the authenticated user.
 # Author: Umut Baris Oztunc        
 class SelfProjectsView(generics.ListAPIView):
+    """
+    List projects of the authenticated user.
+    """
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated,)
     
