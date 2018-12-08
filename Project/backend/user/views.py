@@ -1,6 +1,6 @@
 # Created by Umut Barış Öztunç
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_auth.views import LogoutView
+from rest_auth.views import LogoutView, UserDetailsView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import User
 from .serializers import UserSerializer
@@ -49,3 +49,18 @@ class UserSearchView(ListAPIView):
     def get_queryset(self):
         name = self.kwargs['name']
         return User.objects.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name))
+
+
+# Extended the UserDetailsView to contain extra information in the serializer context.
+# Author: Umut Baris Oztunc
+class UserDetailsViewEx(UserDetailsView):
+    """
+    Retrieve the authenticated user.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+    
+    def get_serializer_context(self):
+        context = super(UserDetailsViewEx, self).get_serializer_context()
+        context['self'] = True
+        return context

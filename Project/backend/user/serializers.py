@@ -60,12 +60,15 @@ class UserSerializer(UserDetailsSerializer):
     )
     
     class Meta(UserDetailsSerializer.Meta):
-        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills',)
+        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills', 'balance',)
         read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'is_client',)
         
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
         del self.fields['pk']
+        print(kwargs['context'])
+        if not kwargs['context'].get('self', False):
+            del self.fields['balance']
         
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)

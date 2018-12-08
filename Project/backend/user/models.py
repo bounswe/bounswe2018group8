@@ -8,6 +8,7 @@ class Skill(models.Model):
 class User(AbstractUser):
     is_client = models.BooleanField(default=False)
     bio = models.CharField(max_length=1000, blank=True)
+    balance = models.FloatField(default=0.0)
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
