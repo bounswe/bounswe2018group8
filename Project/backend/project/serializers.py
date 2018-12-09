@@ -10,7 +10,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     freelancer_id = serializers.IntegerField(source='freelancer.user_id', default=None, required=False)
     freelancer_username = serializers.CharField(source='freelancer.user.username', default=None, required=False)
     status = serializers.CharField(required=False)
-    bids = serializers.StringRelatedField(many=True)
+    bids = serializers.StringRelatedField(many=True, required=False)
 
     class Meta():
         model = Project
