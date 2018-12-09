@@ -2,10 +2,12 @@
  * @author Mehmet Calim
  */
 import React from 'react';
+import DatePicker from "react-datepicker";
 import {FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import  { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './Project.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 class Project extends React.Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class Project extends React.Component {
     this.state = {
       title: '',
       description: '',
-      deadline: '',
+      deadline: new Date(),
       max_price: '',
       min_price: '',
     };
@@ -28,6 +30,13 @@ class Project extends React.Component {
             max_price: this.state.max_price,
             min_price: this.state.min_price,
     };
+  }
+
+  //Added for date handling from datepicker
+  handleChange(date) {
+      this.setState({
+          deadline: date
+      });
   }
 
   handle_change = e => {
@@ -100,13 +109,18 @@ class Project extends React.Component {
                 </FormGroup>
                 <FormGroup controlId="Deadline" className="form-row">
                 <ControlLabel>Deadline</ControlLabel>
-                <FormControl
-                    type="text"
-                    name="deadline"
-                    placeholder="2019-04-05T09:05:00Z"
-                    value={this.state.deadline}
-                    onChange={this.handle_change}
-                />
+                    <br/>
+                    <DatePicker
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        timeCaption="time"
+                        dateFormat="yyyy/MM/dd h:mm aa"
+                        selected={this.state.deadline}
+                        value={this.state.deadline}
+                        onChange={this.handleChange.bind(this)}
+                    />
+
                 </FormGroup>
                 <FormGroup controlId="max_price" className="form-row">
                 <ControlLabel>Max price</ControlLabel>
