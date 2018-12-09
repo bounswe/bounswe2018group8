@@ -115,7 +115,7 @@ export default class Home extends React.Component {
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
                                 <p><b>Project's owner: </b><Link to={url}>{clientname}</Link></p>
                                 <p><b>Description: </b>{description}</p>
-                                <p><b>Deadline: </b>{deadline}</p>
+                                <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
                                 <p><b>Status: </b>{status}</p>
                                     <div className="col-md-4 col-md-offset-5">   
