@@ -66,7 +66,6 @@ class UserSerializer(UserDetailsSerializer):
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
         del self.fields['pk']
-        print(kwargs['context'])
         if not kwargs['context'].get('self', False):
             del self.fields['balance']
         
