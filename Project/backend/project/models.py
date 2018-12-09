@@ -14,6 +14,9 @@ class Project(models.Model):
 
 
 class Bid(models.Model):
-    amount = models.IntegerField()
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    amount = models.FloatField()
+    project = models.ForeignKey(Project, related_name='bids', on_delete=models.CASCADE)
     freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s: %f' % (self.freelancer.user.username,self.amount)

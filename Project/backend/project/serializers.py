@@ -10,12 +10,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     freelancer_id = serializers.IntegerField(source='freelancer.user_id', default=None, required=False)
     freelancer_username = serializers.CharField(source='freelancer.user.username', default=None, required=False)
     status = serializers.CharField(required=False)
-    
+    bids = serializers.StringRelatedField(many=True)
+
     class Meta():
         model = Project
         exclude = ('client', 'freelancer',)
-        read_only_fields = ('id', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username',)
-        
+        read_only_fields = ('id', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username', 'bids')
+
     def create(self, validated_data):
         project = Project.objects.create(
             client = self.context['request'].user.client,
@@ -31,7 +32,15 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class BidSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Bid
-        fields = "__all__"
+        exclude = ('project','freelancer')
         read_only_fields = ('pk',)
+    def create(self,validated_data):
+        bid = Bid.objects.create(
+            amount = validated_data['amount'],
+            project = Project.objects.get(id=self.context['id']),
+            freelancer = self.context['request'].user.freelancer
+        )
+        return bid

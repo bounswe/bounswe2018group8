@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework import generics
 from .models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, BidSerializer
 from django.db.models import Q
-from user.permissions import IsClient
+from user.permissions import IsClient, IsFreelancer
 
 class BaseManageView(APIView):
     """
@@ -38,13 +38,27 @@ class ProjectDestroyView(generics.DestroyAPIView):
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated, IsClient,)
 
+class ProjectCreateBidView(generics.CreateAPIView):
+    serializer_class = BidSerializer
+    permission_classes = (permissions.IsAuthenticated, IsFreelancer,)
+
+    def get_serializer_context(self):
+        context = super(ProjectCreateBidView, self).get_serializer_context()
+        context['id'] = self.kwargs['pk']
+        return context
+
+    # def perform_create(self,serializer):
+    #     serializer.save(project_id= self.kwargs.get('pk'))
+    #     serializer.save(freelancer_id= self.request.user.freelancer)
+
 
 class ProjectManageView(BaseManageView):
     VIEWS_BY_METHOD = {
         'DELETE': ProjectDestroyView.as_view,
         'GET': ProjectDetailsView.as_view,
         'PUT': ProjectUpdateView.as_view,
-        'PATCH': ProjectUpdateView.as_view
+        'PATCH': ProjectUpdateView.as_view,
+        'POST' : ProjectCreateBidView.as_view
     }
 
 
@@ -86,19 +100,19 @@ class UserProjectsView(generics.ListAPIView):
     """
     serializer_class = ProjectSerializer
     permission_classes = (permissions.AllowAny,)
-    
+
     def get_queryset(self):
         user_id = self.kwargs['id']
         return Project.objects.filter(client__user__id=user_id)
-        
-        
-# Author: Umut Baris Oztunc        
+
+
+# Author: Umut Baris Oztunc
 class SelfProjectsView(generics.ListAPIView):
     """
     List projects of the authenticated user.
     """
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    
+
     def get_queryset(self):
         return Project.objects.filter(client__user=self.request.user)
