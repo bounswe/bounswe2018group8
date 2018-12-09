@@ -3,20 +3,22 @@
  */
 import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom';
+import { Button, Modal, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import './Profile.css';
 import axios from 'axios';
 
-export var currentUser ={
-    userID : '',
-};
 export default class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            user: '',
+            user: [],
+            deposit_amount: '',
             isLoading: true,
-            errors: null
+            errors: null,
+            show: false,
         }
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
       }
     // @mehmetcalim: Get API request is added in order to get current user data.
     componentDidMount() {
@@ -26,23 +28,59 @@ export default class Profile extends Component {
             }
         })
             .then(res => {
-                console.log(res);
                 this.setState({
-                    user: JSON.parse(localStorage.getItem('user')),
+                    user: res.data,
                     isLoading: false,
                     isUser: true,
                 });
             })
             .catch(error => this.setState({ error, isLoading: false }));
     }
+    submit(e) {
+        e.preventDefault();
+        axios.post('http://52.59.230.90/users/self', {
+          deposit_amount: this.state.deposit_amount,
+        },{
+            headers: {
+            Authorization: `JWT ${localStorage.getItem('token')}`
+            }
+        }).then(res => {
+                this.setState({
+                    user: res.data,
+                    isLoading: false,
+                    isUser: true,
+                });
+            })
+            .catch(error => this.setState({error, isLoading: false}));
+    }
+    handleClose() {
+        this.setState({ show: false });
+    }
+    
+    handleShow() {
+        if(localStorage.getItem('token')== null){
+            this.setState({ show: false });
+        }
+        else{
+            this.setState({ show: true });
+        }
+    }
+
+    handle_change = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevstate => {
+          const newState = { ...prevstate };
+          newState[name] = value;
+          return newState;
+        });
+    };
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
         }    
         else{
             const { isLoading, user } = this.state;
-            currentUser.userID = user.pk;
-            console.log(currentUser.userID);
             return (
             <React.Fragment>
                 <div className="row">
@@ -58,19 +96,53 @@ export default class Profile extends Component {
                                 <p><b>Email: </b>{user.email}</p>
                                 <p><b>username: </b>{user.username}</p>
                                 <p><b>Bio: </b>{user.bio}</p>
-                                <p><b>Projects: </b>{user.projects}</p>
-                                <p><b>Skills: </b>{user.skills}</p>
+                                <p><b>Balance: </b>{user.balance}</p>
                                 <hr/>
-                            </div>
+                                <div className="col-md-4 col-md-offset-5">   
+                                    <Button bsStyle="success" bsSize="large" onClick={this.handleShow}>
+                                        Deposit
+                                    </Button>
+                                <br/>
+                                <br/>
+                                </div>
+                                <br/>
+                                <Modal show={this.state.show} onHide={this.handleClose}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Request to deposit</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <form onSubmit={e => this.submit(e)}>
+                                            <FormGroup controlId="deposit_amount">
+                                                <ControlLabel>Please specify your deposit amount</ControlLabel>
+                                                <FormControl
+                                                    autoFocus
+                                                    type="text"
+                                                    name="deposit_amount"
+                                                    placeholder="Enter your deposit amount"
+                                                    value={this.state.deposit_amount}
+                                                    onChange={this.handle_change}
+                                                />
+                                            </FormGroup>
+                                            <button type="submit" className="btn btn-primary">Request</button>
+                                        </form>
+                                        <br/>
+                                        <br/>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button onClick={this.handleClose}>Close</Button>
+                                    </Modal.Footer>
+                                </Modal>
                             
+                            </div>
                         ) : (
+                    
                         <p>Loading...</p>
                     )}
                     
                         </div>
                     </div>
                     <div className="col-md-4"></div>
-                </div>
+                    </div>
             </React.Fragment>
             );
         }    

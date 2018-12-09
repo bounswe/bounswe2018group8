@@ -58,8 +58,7 @@ class Project extends React.Component {
             Authorization: `JWT ${localStorage.getItem('token')}`
         }
         }).then(res => {
-      localStorage.setItem('project_info', res.data);
-      this.props.history.push('/home');
+        this.props.history.push('/home');
     }).catch(() => this.setState({
 
       error: true

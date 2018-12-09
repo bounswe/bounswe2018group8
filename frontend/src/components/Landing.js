@@ -19,7 +19,6 @@ class Landing extends React.Component {
 
     // @mehmetcalim: We will use this handle when the logut button will be added.
     handle_logout = () => {
-        console.log('JWT ' + localStorage.getItem('token'));
         axios.post("http://52.59.230.90/logout/",{
             headers: {
                 'Authorization': 'JWT ' + localStorage.getItem('token')
