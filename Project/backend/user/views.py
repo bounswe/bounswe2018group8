@@ -5,6 +5,10 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import User
 from .serializers import UserSerializer
 from django.db.models import Q
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.utils.translation import ugettext_lazy as _
 
 
 # Extended the LogoutView from REST Auth module to make it only accessible by authenticated requests.
@@ -64,3 +68,27 @@ class UserDetailsViewEx(UserDetailsView):
         context = super(UserDetailsViewEx, self).get_serializer_context()
         context['self'] = True
         return context
+
+
+class DepositView(APIView):
+    """
+    Deposit money into authenticated user's account.
+    """
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request, format=None):
+        amount = request.data.get('amount')
+        if amount:
+            try:
+                amount = float(amount)
+                if amount > 0.0:
+                    user = request.user
+                    user.balance += amount
+                    user.save()
+                    return Response({"detail": _("Sucessfully deposited.")}, status.HTTP_200_OK)
+                else:
+                    return Response({"amount": _("Must be a positive number.")}, status.HTTP_400_BAD_REQUEST)
+            except:
+                return Response({"amount": _("Must be a positive number.")}, status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"amount": _("This field is required.")}, status.HTTP_400_BAD_REQUEST)
