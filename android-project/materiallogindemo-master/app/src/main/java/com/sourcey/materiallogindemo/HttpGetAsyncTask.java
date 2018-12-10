@@ -25,20 +25,16 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
+public class HttpGetAsyncTask extends AsyncTask<String, Void, String> {
     // This is the JSON body of the post
-    JSONObject postData;
     String response;
     Context mContext;
     int statusCode;
     String token;
     // This is a constructor that allows you to pass in the JSON body
-    public HttpPostAsyncTask(JSONObject postData, Context mContext, String token) {
-        if (postData != null) {
-            this.postData = postData;
-        }
-        this.mContext= mContext;
-        this.token= token;
+    public HttpGetAsyncTask( Context mContext, String token) {
+            this.mContext= mContext;
+            this.token= token;
     }
 
     // This is a function that we are overriding from AsyncTask. It takes Strings as parameters because that is what we defined for the parameters of our async task
@@ -53,20 +49,13 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
 
 
             urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
 
             urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod("GET");
             Log.d("WhatDoWeSend", token);
             if(token!=null && token.length()>0){
                 urlConnection.setRequestProperty("Authorization", "JWT "+token);
                 urlConnection.setDoOutput(false);
-            }
-
-            if (this.postData != null) {
-                OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
-                writer.write(postData.toString());
-                writer.flush();
             }
 
             statusCode = urlConnection.getResponseCode();
@@ -77,7 +66,6 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
 
                 response = convertInputStreamToString(inputStream);
                 Log.d("MERHABA",response);
-                //JSONObject resp= convertStringToJSON(response1);
 
                 // From here you can convert the string to JSON with whatever JSON parser you like to use
                 // After converting the string to JSON, I call my custom callback. You can follow this process too, or you can implement the onPostExecute(Result) method
@@ -96,37 +84,6 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
         return statusCode+response;
     }
 
-/*    @Override
-    protected void onPostExecute(String result) {
-        result=result.substring(3);
-        String str= null;
-        if(statusCode>=HttpURLConnection.HTTP_BAD_REQUEST) {
-            try {
-                str = JSONArrayToString(result, "non_field_errors");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(mContext.getApplicationContext(), str, Toast.LENGTH_LONG).show();
-        }
-        else if(statusCode==HttpURLConnection.HTTP_OK){
-            Toast.makeText(mContext.getApplicationContext(), "Login accepted.", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(mContext, HomepageActivity.class);
-            mContext.startActivity(intent);
-            ((Activity) mContext).finish();
-        }
-        else if(statusCode==HttpURLConnection.HTTP_CREATED){
-            Toast.makeText(mContext.getApplicationContext(), "Account created.", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(mContext, LoginActivity.class);
-            mContext.startActivity(intent);
-            ((Activity) mContext).finish();
-
-        }
-
-        // might want to change "executed" for the returned string passed
-        // into onPostExecute() but that is upto you
-    }*/
 
     public String convertInputStreamToString(InputStream in) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));

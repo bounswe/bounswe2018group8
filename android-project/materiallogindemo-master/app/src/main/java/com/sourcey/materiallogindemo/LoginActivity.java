@@ -196,7 +196,9 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Login accepted.", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
         String str = JSONObjectToString(response, "token"); //Getting error field: Non-field-errors etc...
+        String person= JSONObjectToString(response, "user");
         intent.putExtra("token", str);
+        intent.putExtra("user", person);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
@@ -248,4 +250,5 @@ public class LoginActivity extends AppCompatActivity {
         JSONObject json = new JSONObject(str);
         return json.getString(field);
     }
+
 }

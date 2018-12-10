@@ -1,5 +1,8 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.SearchView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
@@ -32,7 +42,7 @@ public class HomepageActivity  extends AppCompatActivity{
     private static final String TAG = "HomepageActivity";
     private String token="";
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
-
+    private ArrayList<String> projects= new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +63,10 @@ public class HomepageActivity  extends AppCompatActivity{
                     switch (item.getItemId()) {
 
                         case R.id.menu_homepage:
+                            goToHomePage();
                             break;
                         case R.id.menu_profile:
+                            goToProfilePage();
                             break;
                         case R.id.menu_create:
                             Intent intent = new Intent(getApplicationContext(), ProjectCreationActivity.class);
@@ -70,7 +82,45 @@ public class HomepageActivity  extends AppCompatActivity{
                 }
             });
         }
+        goToHomePage();
     }
+
+    private void goToProfilePage() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = (Fragment) new Profile_fragment();
+        fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void goToWorksPage() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = (Fragment) new Workspage_fragment();
+        fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void goToHomePage() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = (Fragment) new Homepage_fragment();
+        fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    public JSONArray getProjects() throws ExecutionException, InterruptedException, IOException, JSONException {
+        HttpGetAsyncTask myTask = new HttpGetAsyncTask(this,token);
+        String theResponse = myTask.execute("http://52.59.230.90/projects/").get();
+        int statusCode = Integer.parseInt(theResponse.substring(0, 3));
+        String response = theResponse.substring(3);
+        Log.d("getProjects", " response is:" + response);
+        JSONArray jsonArray = new JSONArray(response);
+        JSONObject elemeent= jsonArray.getJSONObject(0);
+        Log.d("deniyorum",elemeent.getString("client_username"));
+        return jsonArray;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -114,7 +164,6 @@ public class HomepageActivity  extends AppCompatActivity{
     }
 
     public void logout() throws ExecutionException, InterruptedException, IOException, JSONException {
-        //_logoutLink.setEnabled(false);
         JSONObject jsonToPost = new JSONObject();
         HttpPostAsyncTask myTask = new HttpPostAsyncTask(jsonToPost, this,token);
         String theResponse = myTask.execute("http://52.59.230.90/logout/").get();
@@ -124,7 +173,7 @@ public class HomepageActivity  extends AppCompatActivity{
 
         String str = JSONObjectToString(response, "detail"); //Getting error field: Non-field-errors etc...
         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
-        //_logoutLink.setEnabled(true);
+
     }
     @Override
     public void onBackPressed() {
@@ -135,4 +184,14 @@ public class HomepageActivity  extends AppCompatActivity{
         JSONObject json = new JSONObject(str);
         return json.getString(field);
     }
+    public String JSONArrayToString(String str,String field) throws JSONException, IOException {
+        JsonElement jelement = new JsonParser().parse(str);
+        JsonObject jobject = jelement.getAsJsonObject();
+        JsonArray jarray = jobject.getAsJsonArray(field);
+        return jarray.get(0).toString();
+    }
+    public String getToken(){
+        return token;
+    }
+
 }

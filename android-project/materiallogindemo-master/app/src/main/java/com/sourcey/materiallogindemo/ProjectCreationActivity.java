@@ -134,7 +134,7 @@ public class ProjectCreationActivity extends AppCompatActivity {
         String field=response.substring(2,response.indexOf("\":"));
 
         try {
-            str = JSONArrayToString(response, field); //Getting error field: Non-field-errors etc...
+            str = JSONObjectToString(response, field); //Getting error field: Non-field-errors etc...
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -168,6 +168,7 @@ public class ProjectCreationActivity extends AppCompatActivity {
             _maxPrice.setError("maximum price cannot be empty.");
             valid = false;
         }
+
         else if (minPrice.isEmpty()) {
             _minPrice.setError("minimum price cannot be empty.");
             valid = false;
@@ -196,5 +197,9 @@ public class ProjectCreationActivity extends AppCompatActivity {
         JsonObject jobject = jelement.getAsJsonObject();
         JsonArray jarray = jobject.getAsJsonArray(field);
         return jarray.get(0).toString();
+    }
+    public String JSONObjectToString(String str,String field) throws JSONException, IOException {
+        JSONObject json = new JSONObject(str);
+        return json.getString(field);
     }
 }

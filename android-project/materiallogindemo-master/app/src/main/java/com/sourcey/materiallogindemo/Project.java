@@ -10,10 +10,12 @@ public class Project {
     private int maxprice;
     private int minprice;
     private String status;
-    private int client;
-    private String [] freelancer;
+    private int client_id;
+    private String client_username;
+    private String freelancer_id;
+    private String freelancer_username;
 
-    public Project(int id, String title, String description, Date deadline, int maxprice, int minprice, String status, int client, String[] freelancer) {
+    public Project(int id, String title, String description, Date deadline, int maxprice, int minprice, String status, int client_id, String freelancer_id,String freelancer_username, String client_username) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -21,8 +23,10 @@ public class Project {
         this.maxprice = maxprice;
         this.minprice = minprice;
         this.status = status;
-        this.client = client;
-        this.freelancer = freelancer;
+        this.client_id = client_id;
+        this.freelancer_id = freelancer_id;
+        this.client_username= client_username;
+        this.freelancer_username= freelancer_username;
     }
 
     public int getId() {
@@ -57,16 +61,16 @@ public class Project {
         this.deadline = deadline;
     }
 
-    public int getMaxprice() {
-        return maxprice;
+    public String getMaxprice() {
+        return maxprice+"";
     }
 
     public void setMaxprice(int maxprice) {
         this.maxprice = maxprice;
     }
 
-    public int getMinprice() {
-        return minprice;
+    public String getMinprice() {
+        return minprice+"";
     }
 
     public void setMinprice(int minprice) {
@@ -81,19 +85,19 @@ public class Project {
         this.status = status;
     }
 
-    public int getClient() {
-        return client;
+    public int getClient_id() {
+        return client_id;
     }
 
-    public void setClient(int client) {
-        this.client = client;
+    public void setClient_id(int client) {
+        this.client_id = client_id;
     }
 
-    public String[] getFreelancer() {
-        return freelancer;
+    public String getFreelancer_id() {
+        return freelancer_id;
     }
 
-    public void setFreelancer(String[] freelancer) {
-        this.freelancer = freelancer;
+    public void setFreelancer_id(String freelancer) {
+        this.freelancer_id = freelancer_id;
     }
 }
