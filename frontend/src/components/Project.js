@@ -75,6 +75,7 @@ class Project extends React.Component {
   }
 
   render() {
+    var user = localStorage.getItem('user');
     if(localStorage.getItem('token')== null){
         return <Redirect to='/' />
     }    

@@ -12,7 +12,7 @@ export default class Profile extends Component {
         super();
         this.state = {
             user: [],
-            deposit_amount: '',
+            amount: '',
             isLoading: true,
             errors: null,
             show: false,
@@ -38,18 +38,12 @@ export default class Profile extends Component {
     }
     submit(e) {
         e.preventDefault();
-        axios.post('http://52.59.230.90/users/self', {
-          deposit_amount: this.state.deposit_amount,
+        axios.post('http://52.59.230.90/users/self/deposit/', {
+          amount: this.state.amount,
         },{
             headers: {
             Authorization: `JWT ${localStorage.getItem('token')}`
             }
-        }).then(res => {
-                this.setState({
-                    user: res.data,
-                    isLoading: false,
-                    isUser: true,
-                });
             })
             .catch(error => this.setState({error, isLoading: false}));
     }
@@ -112,18 +106,18 @@ export default class Profile extends Component {
                                     </Modal.Header>
                                     <Modal.Body>
                                         <form onSubmit={e => this.submit(e)}>
-                                            <FormGroup controlId="deposit_amount">
+                                            <FormGroup controlId="amount">
                                                 <ControlLabel>Please specify your deposit amount</ControlLabel>
                                                 <FormControl
                                                     autoFocus
                                                     type="text"
-                                                    name="deposit_amount"
+                                                    name="amount"
                                                     placeholder="Enter your deposit amount"
-                                                    value={this.state.deposit_amount}
+                                                    value={this.state.amount}
                                                     onChange={this.handle_change}
                                                 />
                                             </FormGroup>
-                                            <button type="submit" className="btn btn-primary">Request</button>
+                                            <button type="submit" className="btn btn-primary" onClick={this.handleClose}>Request</button>
                                         </form>
                                         <br/>
                                         <br/>

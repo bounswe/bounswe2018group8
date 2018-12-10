@@ -17,7 +17,7 @@ export default class Home extends React.Component {
             isLoading: true,
             errors: null,
             show: false,
-            bid_amount: '',
+            amount: '',
         }    
         
         this.handleShow = this.handleShow.bind(this);
@@ -32,7 +32,7 @@ export default class Home extends React.Component {
                     projects:res.data,
                     isLoading: false
                 });
-                localStorage.setItem('projects_info', JSON.stringify(res.data));
+                //localStorage.setItem('projects_info', JSON.stringify(res.data));
             })
             .catch(error => this.setState({ error, isLoading: false }));
     }
@@ -63,12 +63,19 @@ export default class Home extends React.Component {
 
     // mehmetcalim: this submit function belongs to popup window.
     
-    submit(e) {
+    submit(e,id) {
         e.preventDefault();
-        axios.post('http://52.59.230.90/projects/' + this.project_id, {
-          bid_amount: this.state.bid_amount,
-        }).then(res => {
-          localStorage.setItem('project_details', res.data);
+        axios.post('http://52.59.230.90/projects/' + id +'/',
+            {
+            amount: this.state.amount,
+            }, 
+            {
+            headers: {
+                Authorization: `JWT ${localStorage.getItem('token')}`
+            }
+            }
+        ).then(res => {
+          //localStorage.setItem('project_details', res.data);
         }).catch(() => this.setState({
           error: true
         }));
@@ -77,6 +84,7 @@ export default class Home extends React.Component {
 
     render() {
         const { isLoading, projects } = this.state;
+        var project_id;
         var clientname;
         var url;
         var url2;
@@ -96,13 +104,14 @@ export default class Home extends React.Component {
                     <hr/>                
                     {!isLoading ? (
                         projects.map(project => {
-                            const { id, client_id, client_username, freelancer_id, freelancer_username, status, title,
+                            const { id, client_id, client_username, freelancer_id, freelancer_username, status, bids, title,
                                 description, max_price, min_price, deadline} = project;
                                 this.project_id={id};
                             if(localStorage.getItem('token')!= null){
+                                project_id=id;
                                 clientname=client_username;
                                 url=`/user/${client_id}`;
-                                url2="";
+                                url2=`/projects/${id}`;
                             }
                             else{
                                 clientname="(login to see who is the owner of this project)"
@@ -118,40 +127,11 @@ export default class Home extends React.Component {
                                 <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
                                 <p><b>Status: </b>{status}</p>
-                                    <div className="col-md-4 col-md-offset-5">   
-                                    <Button bsStyle="success" bsSize="large" onClick={this.handleShow} href={url2}>
-                                        BID
+                                <p><b>Project details and biding:</b>
+                                    <Button bsStyle="success" bsSize="xsmall" block href={url2}>
+                                        Project details
                                     </Button>
-                                    </div>
-                                    <br/>
-                                    <br/>
-                                    <Modal show={this.state.show} onHide={this.handleClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Request to bid on this project</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <form onSubmit={e => this.submit(e)}>
-                                                <FormGroup controlId="bid_amount">
-                                                    <ControlLabel>Please specify your bid amount</ControlLabel>
-                                                    <FormControl
-                                                        autoFocus
-                                                        type="text"
-                                                        name="bid_amount"
-                                                        placeholder="Enter your bid amount"
-                                                        value={this.state.bid_amount}
-                                                        onChange={this.handle_change}
-                                                    />
-                                                </FormGroup>
-                                                <button type="submit" className="btn btn-primary">Request</button>
-                                            </form>
-                                            <br/>
-                                            <br/>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button onClick={this.handleClose}>Close</Button>
-                                        </Modal.Footer>
-                                    </Modal>
- 
+                                </p>
                             </div>
                         
                         );
@@ -159,11 +139,10 @@ export default class Home extends React.Component {
                     ) : (
                         <p>Loading...</p>
                     )}
-
                 </div>
                 <div className="col-md-2"></div>
-                </div>
-          </React.Fragment>
+            </div>
+            </React.Fragment>
         );
-      }
+    }
 }

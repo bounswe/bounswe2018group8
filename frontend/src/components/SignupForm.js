@@ -21,7 +21,7 @@ class SignupForm extends React.Component {
       password2: '',
       first_name: '',
       last_name: '',
-      is_client: 'true',
+      is_client: true,
     };
   }
 
@@ -34,11 +34,17 @@ class SignupForm extends React.Component {
       return newState;
     });
   };
-  handleClient() {
-    const {is_client} = this.state;
-    this.setState(state =>{
-      state.is_client = 'true'
-    });
+  handleClient(e) {
+    if(this.inputEl.value == 'Client'){
+      this.setState(state =>{
+        state.is_client = true
+      });
+    }
+    else{
+      this.setState(state =>{
+        state.is_client = false
+      });
+    }
   }
 
   // @mehmetcalim: I added register request function here instead of Landing.js and also used axios.
@@ -114,7 +120,9 @@ class SignupForm extends React.Component {
             </FormGroup>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select user type</ControlLabel>
-              <FormControl componentClass="select" placeholder="select">
+              <FormControl componentClass="select" placeholder="select" onChange={this.handleClient.bind(this)}
+                            inputRef={ el => this.inputEl=el }
+>
                 <option value="Client">Client </option>
                 <option value="Freelancer">Freelancer</option>
               </FormControl>
