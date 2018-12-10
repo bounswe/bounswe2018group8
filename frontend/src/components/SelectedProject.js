@@ -43,7 +43,7 @@ export default class SelectedProject extends Component {
           return newState;
         });
     };
-    // @mehmetcalim: Get API request is added in order to get current user data.
+    // @mehmetcalim: Get API request is added in order to get selected project data.
     componentDidMount() {
         if(localStorage.getItem('token')!= null){
             this.project_id = this.props.match.params.id;
@@ -62,6 +62,8 @@ export default class SelectedProject extends Component {
         }
         console.log(this.project);
     }
+
+    // @mehmetcalim: Submit button to bid project.
 
     submit(e) {
         e.preventDefault();
