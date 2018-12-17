@@ -1,6 +1,6 @@
 # Created by Ozan Kınasakal
 from django.urls import path
-from .views import ProjectManageView, ProjectListManageView, ProjectSearchView, UserProjectsView, SelfProjectsView, MakeBidView
+from .views import ProjectManageView, ProjectListManageView, ProjectSearchView, UserProjectsView, SelfProjectsView, MakeBidView, AcceptBidView
 
 urlpatterns = [
     path('<int:pk>/', ProjectManageView.as_view()),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('user/<int:id>/', UserProjectsView.as_view(), name='user_projects'),
     path('user/self/', SelfProjectsView.as_view(), name='self_projects'),
     path('<int:id>/bid/', MakeBidView.as_view(), name='make_bid'),
+    path('<int:id>/bid/accept/', AcceptBidView.as_view(), name='accept_bid'),
 ]

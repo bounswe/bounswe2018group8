@@ -3,7 +3,8 @@ from .models import Bid
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 
-
+# Updates average bid and bid counts for the projects whenever a bid is created or updated.
+# Author: Umut Baris Oztunc
 @receiver(pre_save, sender=Bid)
 def update_bid_info_on_save(sender, instance, *args, **kwargs):
     project = instance.project
@@ -26,7 +27,9 @@ def update_bid_info_on_save(sender, instance, *args, **kwargs):
     project.average_bid = total / project.bid_count
     project.save()
     
-    
+
+# Updates average bid and bid counts for the projects whenever a bid is deleted.
+# Author: Umut Baris Oztunc
 @receiver(pre_delete, sender=Bid)
 def update_bid_info_on_delete(sender, instance, *args, **kwargs):
     project = instance.project

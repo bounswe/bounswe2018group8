@@ -142,3 +142,30 @@ class MakeBidView(APIView):
         else:
             return Response({"amount": _("This field is required.")}, status.HTTP_400_BAD_REQUEST)
 
+
+# Author: Umut Baris Oztunc
+class AcceptBidView(APIView):
+    """
+    Accept a bid.
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, id, format=None):
+        bid_id = request.data.get('id')
+        if bid_id:
+            try:
+                bid = Bid.objects.get(
+                    id = bid_id,
+                    project__id = id
+                )
+            except Bid.DoesNotExist:
+                return Response({"id": _("Bid does not exist.")}, status.HTTP_400_BAD_REQUEST)
+            project = bid.project
+            if project.client != request.user:
+                return Response({"detail": _("The project does not belong to you.")}, status.HTTP_401_UNAUTHORIZED)
+            project.freelancer = bid.freelancer
+            project.status = 'in-progress'
+            project.save()
+            return Response({"detail": _("Bid has been accepted.")}, status.HTTP_200_OK)
+        else:
+            return Response({"id": _("This field is required.")}, status.HTTP_400_BAD_REQUEST)

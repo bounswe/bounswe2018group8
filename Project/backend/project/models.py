@@ -22,5 +22,5 @@ class Bid(models.Model):
     project = models.ForeignKey(Project, related_name='bids', on_delete=models.CASCADE)
     freelancer = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %f' % (self.freelancer.username,self.amount)

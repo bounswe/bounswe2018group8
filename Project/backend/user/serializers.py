@@ -28,15 +28,6 @@ class RegisterSerializer(RegisterSerializer):
         required=settings.ACCOUNT_EMAIL_REQUIRED
     )
 
-    is_client = serializers.BooleanField(required=True)
-
-    def custom_signup(self, request, user):
-        if user.is_client:
-            client = Client.objects.create(user=user)
-        else:
-            freelancer = Freelancer.objects.create(user=user)
-        return user
-
     def get_cleaned_data(self):
         cleaned_data = super(RegisterSerializer, self).get_cleaned_data()
         cleaned_data['first_name'] = self.validated_data.get('first_name', '')
@@ -60,7 +51,6 @@ class SkillSerializer(serializers.ModelSerializer):
 # Author: Umut Baris Oztunc
 class UserSerializer(UserDetailsSerializer):
     skills = SkillSerializer(many=True)
-    
     class Meta(UserDetailsSerializer.Meta):
         fields = ('id',) + UserDetailsSerializer.Meta.fields + ('bio', 'skills', 'balance',)
         read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'balance',)
@@ -77,14 +67,14 @@ class UserSerializer(UserDetailsSerializer):
         return ret
         
     def to_internal_value(self, data):
-        if data['skills']:
+        skills_data = data.get('skills')
+        if isinstance(skills, list):
             skills = []
-            for skill in data['skills']:
+            for skill in skills_data:
                 skills.append({'name': skill})
             data['skills'] = skills
         return super(UserSerializer, self).to_internal_value(data)
-        
-                    
+
     def update(self, instance, validated_data):
         skills = validated_data.pop('skills', None)
         instance = super(UserSerializer, self).update(instance, validated_data)
