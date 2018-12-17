@@ -2,12 +2,13 @@
 from rest_framework import serializers
 from rest_auth.serializers import UserDetailsSerializer
 from rest_auth.registration.serializers import RegisterSerializer
-from .models import User, Client, Freelancer, Skill
+from .models import User, Skill
 from project.models import Project
 from django.conf import settings
 from .validators import FirstNameValidator, LastNameValidator, SkillValidator
 
-
+# Extended the RegisterSerializer from REST AUTH module to add custom fields and validations.
+# Author: Umut Baris Oztunc
 class RegisterSerializer(RegisterSerializer):
 
     first_name = serializers.CharField(
@@ -40,10 +41,11 @@ class RegisterSerializer(RegisterSerializer):
         cleaned_data = super(RegisterSerializer, self).get_cleaned_data()
         cleaned_data['first_name'] = self.validated_data.get('first_name', '')
         cleaned_data['last_name'] = self.validated_data.get('last_name', '')
-        cleaned_data['is_client'] = self.validated_data.get('is_client', '')
         return cleaned_data
         
 
+# Serializer for Skill model.
+# Author: Umut Baris Oztunc
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
@@ -53,15 +55,15 @@ class SkillSerializer(serializers.ModelSerializer):
         }
 
 
+
+# Extended the UserDetailsSerializer from REST AUTH module to add custom fields and override the update function.
+# Author: Umut Baris Oztunc
 class UserSerializer(UserDetailsSerializer):
-    skills = SkillSerializer(
-        many=True,
-        source='freelancer.skills'
-    )
+    skills = SkillSerializer(many=True)
     
     class Meta(UserDetailsSerializer.Meta):
-        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('is_client', 'bio', 'skills', 'balance',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'is_client',)
+        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('bio', 'skills', 'balance',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'balance',)
         
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
@@ -71,10 +73,7 @@ class UserSerializer(UserDetailsSerializer):
         
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)
-        if ret['is_client']:
-            del ret['skills']
-        else:
-            ret['skills'] = [skill['name'] for skill in ret['skills']]
+        ret['skills'] = [skill['name'] for skill in ret['skills']]
         return ret
         
     def to_internal_value(self, data):
@@ -85,21 +84,20 @@ class UserSerializer(UserDetailsSerializer):
             data['skills'] = skills
         return super(UserSerializer, self).to_internal_value(data)
         
-                
-    
+                    
     def update(self, instance, validated_data):
-        freelancer = validated_data.pop('freelancer', None)
+        skills = validated_data.pop('skills', None)
         instance = super(UserSerializer, self).update(instance, validated_data)
-        if not instance.is_client:
-            instance.freelancer.skills.clear()
-            for skill in freelancer.get('skills', {}):
+        if skills != None:
+            instance.skills.clear()
+            for skill in skills:
                 name = skill.get('name')
                 if name:
                     try:
                         s = Skill.objects.get(name=name)
-                    except:
+                    except Skill.DoesNotExist:
                         s = Skill.objects.create(name=name)
-                    instance.freelancer.skills.add(s)
+                    instance.skills.add(s)
         return instance
 
 

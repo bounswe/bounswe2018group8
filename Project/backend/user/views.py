@@ -70,6 +70,7 @@ class UserDetailsViewEx(UserDetailsView):
         return context
 
 
+# Author: Umut Baris Oztunc
 class DepositView(APIView):
     """
     Deposit money into authenticated user's account.

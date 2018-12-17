@@ -5,21 +5,20 @@ from user.serializers import UserSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    client_id = serializers.IntegerField(source='client.user_id', required=False)
-    client_username = serializers.CharField(source='client.user.username', required=False)
-    freelancer_id = serializers.IntegerField(source='freelancer.user_id', default=None, required=False)
-    freelancer_username = serializers.CharField(source='freelancer.user.username', default=None, required=False)
+    client_id = serializers.IntegerField(source='client.id', required=False)
+    client_username = serializers.CharField(source='client.username', required=False)
+    freelancer_id = serializers.IntegerField(source='freelancer.id', default=None, required=False)
+    freelancer_username = serializers.CharField(source='freelancer.username', default=None, required=False)
     status = serializers.CharField(required=False)
-    bids = serializers.StringRelatedField(many=True, required=False)
 
     class Meta():
         model = Project
-        exclude = ('client', 'freelancer',)
-        read_only_fields = ('id', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username', 'bids')
+        fields = '__all__'
+        read_only_fields = ('id', 'client_id', 'client_username', 'freelancer_id', 'freelancer_username', 'average_bid', 'bid_count',)
 
     def create(self, validated_data):
         project = Project.objects.create(
-            client = self.context['request'].user.client,
+            client = self.context['request'].user,
             freelancer = None,
             title = validated_data['title'],
             description = validated_data['description'],
@@ -32,15 +31,11 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class BidSerializer(serializers.ModelSerializer):
+    project_id = serializers.IntegerField(source='project.id', required=False)
+    freelancer_id = serializers.IntegerField(source='freelancer.id', required=False)
 
     class Meta:
         model = Bid
-        exclude = ('project','freelancer')
-        read_only_fields = ('pk',)
-    def create(self,validated_data):
-        bid = Bid.objects.create(
-            amount = validated_data['amount'],
-            project = Project.objects.get(id=self.context['id']),
-            freelancer = self.context['request'].user.freelancer
-        )
-        return bid
+        fields = ('id', 'amount', 'project_id', 'freelancer_id',)
+        read_only_fields = ('id', 'project_id', 'freelancer_id',)
+        
