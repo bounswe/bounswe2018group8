@@ -32,7 +32,7 @@ class Project extends React.Component {
     };
   }
 
-  //Added for date handling from datepicker
+  //Added for date handling from datepicker.
   handleChange(date) {
       this.setState({
           deadline: date
