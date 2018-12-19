@@ -130,10 +130,13 @@ class MakeBidView(APIView):
                     bid.save()
                     return Response({"detail": _("Bid has successfully been updated.")}, status.HTTP_200_OK)
                 except Bid.DoesNotExist:
+                    project = Project.objects.get(id=id)
+                    if project.client == request.user:
+                        return Response({"amount": _("Clients are not allowed to bid on their projects.")}, status.HTTP_400_BAD_REQUEST)
                     bid = Bid.objects.create(
                         freelancer = request.user,
                         amount = amount,
-                        project = Project.objects.get(id=id)
+                        project = project
                     )
                     bid.save()
                     return Response({"detail": _("Bid has successfully been made.")}, status.HTTP_201_CREATED)
