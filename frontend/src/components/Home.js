@@ -18,6 +18,7 @@ export default class Home extends React.Component {
             errors: null,
             show: false,
             amount: '',
+            search: "",
         }    
         
         this.handleShow = this.handleShow.bind(this);
@@ -49,6 +50,10 @@ export default class Home extends React.Component {
         else{
             this.setState({ show: true });
         }
+    }
+
+    updateSearch(event){
+        this.setState({search: event.target.value});
     }
 
     handle_change = e => {
@@ -95,15 +100,22 @@ export default class Home extends React.Component {
                 <div className="col-md-8" id="feed">
                     <Link to="/"> <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" /> </Link>
                     <hr/>
-                    <div className="col-md-3">   
-                        <Button bsStyle="danger" block href="/project">
-                        Create a project
-                        </Button>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <Button bsStyle="danger" href="/project">
+                                Create a project
+                            </Button>
+                            <input className="pull-right"
+                                   type="text"
+                                   placeholder="Search..."
+                                   value = {this.state.search}
+                                   onChange={this.updateSearch.bind(this)}/>
+                        </div>
                     </div>
                     <hr/>
                     <hr/>                
                     {!isLoading ? (
-                        projects.map(project => {
+                        projects.filter(project => project.title.toLowerCase().includes(this.state.search.toLowerCase())).map(project => {
                             const { id, client_id, client_username, freelancer_id, freelancer_username, status, bids, title,
                                 description, max_price, min_price, deadline} = project;
                                 this.project_id={id};
