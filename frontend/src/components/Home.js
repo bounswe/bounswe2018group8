@@ -52,6 +52,7 @@ export default class Home extends React.Component {
         }
     }
 
+    // kubraeryılmaz: updates search value.
     updateSearch(event){
         this.setState({search: event.target.value});
     }
@@ -86,7 +87,7 @@ export default class Home extends React.Component {
         }));
     }
     
-
+    //kubraeryılmaz: searching is done by filtering while mapping.
     render() {
         const { isLoading, projects } = this.state;
         var project_id;
