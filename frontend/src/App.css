@@ -1,0 +1,12 @@
+/**
+ * @author Mehmet Calim
+ */
+.App {
+  
+  background-color: #e8ebee
+}
+
+input {
+  display: block;
+  margin: 5px 0 5px;
+}

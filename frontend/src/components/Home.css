@@ -1,0 +1,23 @@
+#feed{
+
+	padding: 30px 84px;
+	border-radius: 10px;
+}
+
+.btn-primary{
+  background-color: #7ccbff
+}
+
+.project{
+  border-radius: 16px;
+/* border-width: 10px; */
+/* border-color: black; */
+border: 1px solid;
+padding: 15px;
+margin: 20px 0;
+background-color: white;
+}
+
+.project .img-responsive{
+  margin-bottom: 8px;
+}
