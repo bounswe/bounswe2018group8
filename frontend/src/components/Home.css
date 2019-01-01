@@ -1,12 +1,9 @@
 #feed{
 
-	padding: 30px 84px;
+	padding: 0px 84px;
 	border-radius: 10px;
 }
 
-.btn-primary{
-  background-color: #7ccbff
-}
 
 .project{
   border-radius: 16px;
@@ -20,4 +17,16 @@ background-color: white;
 
 .project .img-responsive{
   margin-bottom: 8px;
+}
+
+.logo{
+	border: 1px solid;
+  border-radius: 125px;
+  border-color: white;
+  background-color: white;
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+hr{
+  border-color: #e8ebee;
 }

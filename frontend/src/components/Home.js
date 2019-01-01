@@ -19,8 +19,8 @@ export default class Home extends React.Component {
             show: false,
             amount: '',
             search: "",
-        }    
-        
+        }
+
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
@@ -42,7 +42,7 @@ export default class Home extends React.Component {
     handleClose() {
         this.setState({ show: false });
     }
-    
+
     handleShow() {
         if(localStorage.getItem('token')== null){
             this.setState({ show: false });
@@ -68,13 +68,13 @@ export default class Home extends React.Component {
     };
 
     // mehmetcalim: this submit function belongs to popup window.
-    
+
     submit(e,id) {
         e.preventDefault();
         axios.post('http://52.59.230.90/projects/' + id +'/',
             {
             amount: this.state.amount,
-            }, 
+            },
             {
             headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`
@@ -86,7 +86,7 @@ export default class Home extends React.Component {
           error: true
         }));
     }
-    
+
     //kubraeryılmaz: searching is done by filtering while mapping.
     render() {
         const { isLoading, projects } = this.state;
@@ -94,27 +94,23 @@ export default class Home extends React.Component {
         var clientname;
         var url;
         var url2;
+        // <div className="row">
+        //     <div className="col-md-12">
+        //         <Button bsStyle="primary" href="/project">
+        //             Create a project
+        //         </Button>
+        //         <input className="pull-right"
+        //                type="text"
+        //                placeholder="Search..."
+        //                value = {this.state.search}
+        //                onChange={this.updateSearch.bind(this)}/>
+        //     </div>
+        // </div>
         return (
           <React.Fragment>
             <div className="row">
-                <div className="col-md-2"></div>
-                <div className="col-md-8" id="feed">
-                    <Link to="/"> <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" /> </Link>
-                    <hr/>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <Button bsStyle="danger" href="/project">
-                                Create a project
-                            </Button>
-                            <input className="pull-right"
-                                   type="text"
-                                   placeholder="Search..."
-                                   value = {this.state.search}
-                                   onChange={this.updateSearch.bind(this)}/>
-                        </div>
-                    </div>
-                    <hr/>
-                    <hr/>                
+                <div className="col-md-3"></div>
+                <div className="col-md-6" id="feed">
                     {!isLoading ? (
                         projects.filter(project => project.title.toLowerCase().includes(this.state.search.toLowerCase())).map(project => {
                             const { id, client_id, client_username, freelancer_id, freelancer_username, status, bids, title,
@@ -130,30 +126,32 @@ export default class Home extends React.Component {
                                 clientname="(login to see who is the owner of this project)"
                                 url="/";
                                 url2="/";
-                            } 
+                            }
                         return (
                             <div key={id} className="project">
                                 <p><b>{title}</b></p>
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
-                                <p><b>Project's owner: </b><Link to={url}>{clientname}</Link></p>
+                                <p><b>Owner: </b><Link to={url}>{clientname}</Link></p>
                                 <p><b>Description: </b>{description}</p>
                                 <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
                                 <p><b>Status: </b>{status}</p>
-                                <p><b>Project details and biding:</b>
-                                    <Button bsStyle="success" bsSize="xsmall" block href={url2}>
-                                        Project details
+                                <p className="text-center">
+                                    <Button bsStyle="default" href={url2}>
+                                        See details
                                     </Button>
                                 </p>
                             </div>
-                        
+
                         );
                         })
                     ) : (
                         <p>Loading...</p>
                     )}
+
+                    <img src="/assets/gratelancer-black.png" className="img-responsive center-block logo" alt="gratelancer-logo" />
                 </div>
-                <div className="col-md-2"></div>
+                <div className="col-md-3"></div>
             </div>
             </React.Fragment>
         );

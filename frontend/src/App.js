@@ -16,7 +16,7 @@ import './App.css';
 
 
 /*
-  @mehmetcalim: I added login and register pages routes because of 
+  @mehmetcalim: I added login and register pages routes because of
   changes in the Landing.js page which is about disributing login
   and signup pages into 2 URLs instead of case usage on main page.
 */

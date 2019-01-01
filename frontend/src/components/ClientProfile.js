@@ -15,7 +15,7 @@ export default class ClientProfile extends Component {
             errors: null,
             user_id: '',
         }
-    } 
+    }
     // @mehmetcalim: Get API request is added in order to get current user data.
     componentDidMount() {
         if(localStorage.getItem('token')!= null){
@@ -37,7 +37,7 @@ export default class ClientProfile extends Component {
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
-        }    
+        }
         else{
             const { isLoading, user } = this.state;
             return (
@@ -59,17 +59,18 @@ export default class ClientProfile extends Component {
                                 <p><b>Skills: </b>{user.skills}</p>
                                 <hr/>
                             </div>
-                            
+
                         ) : (
                         <p>Loading...</p>
                     )}
-                    
+
                         </div>
                     </div>
                     <div className="col-md-4"></div>
                 </div>
+                <div className="fill"></div>
             </React.Fragment>
             );
-        }    
+        }
       }
 }

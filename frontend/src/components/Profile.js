@@ -50,7 +50,7 @@ export default class Profile extends Component {
     handleClose() {
         this.setState({ show: false });
     }
-    
+
     handleShow() {
         if(localStorage.getItem('token')== null){
             this.setState({ show: false });
@@ -72,7 +72,7 @@ export default class Profile extends Component {
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
-        }    
+        }
         else{
             const { isLoading, user } = this.state;
             return (
@@ -92,8 +92,8 @@ export default class Profile extends Component {
                                 <p><b>Bio: </b>{user.bio}</p>
                                 <p><b>Balance: </b>{user.balance}</p>
                                 <hr/>
-                                <div className="col-md-4 col-md-offset-5">   
-                                    <Button bsStyle="success" bsSize="large" onClick={this.handleShow}>
+                                <div className="text-center">
+                                    <Button bsStyle="success" onClick={this.handleShow}>
                                         Deposit
                                     </Button>
                                 <br/>
@@ -126,19 +126,20 @@ export default class Profile extends Component {
                                         <Button onClick={this.handleClose}>Close</Button>
                                     </Modal.Footer>
                                 </Modal>
-                            
+
                             </div>
                         ) : (
-                    
+
                         <p>Loading...</p>
                     )}
-                    
+
                         </div>
                     </div>
                     <div className="col-md-4"></div>
                     </div>
+                    <div className="fill"></div>
             </React.Fragment>
             );
-        }    
+        }
       }
 }

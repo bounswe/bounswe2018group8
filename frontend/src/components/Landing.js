@@ -5,7 +5,7 @@ import React from 'react';
 import  { Redirect } from 'react-router-dom'
 import Nav from './Nav';
 import axios from 'axios';
-import './SignupForm.css';
+import './Landing.css';
 
 class Landing extends React.Component {
     constructor(props) {
@@ -53,16 +53,25 @@ class Landing extends React.Component {
         }
 
         return (
-
+            <React.Fragment>
             <div className="Landing">
-                <Nav
-                    logged_in={this.state.logged_in}
-                    display_form={this.display_form}
-                    handle_logout={this.handle_logout}
-                />
-                {form}
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4" id="landing">
+                <img src="/assets/gratelancer-black.png" className="img-responsive center-block form-logo" alt="gratelancer-logo" />
+                  <Nav
+                      logged_in={this.state.logged_in}
+                      display_form={this.display_form}
+                      handle_logout={this.handle_logout}
+                  />
+                  {form}
+                </div>
+                <div className="col-md-4"></div>
+              </div>
             </div>
 
+            <div className="fill"></div>
+              </React.Fragment>
         );
     }
 }

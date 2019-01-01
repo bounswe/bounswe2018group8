@@ -54,7 +54,7 @@ class Project extends React.Component {
 
   submit(e) {
     e.preventDefault();
-    axios.post('http://52.59.230.90/projects/', 
+    axios.post('http://52.59.230.90/projects/',
         {
         title: this.state.title,
         description: this.state.description,
@@ -78,14 +78,14 @@ class Project extends React.Component {
     var user = localStorage.getItem('user');
     if(localStorage.getItem('token')== null){
         return <Redirect to='/' />
-    }    
+    }
     else{
         return (
         <div className="row">
             <div className="col-md-4"></div>
             <div className="col-md-4" id="form">
             <form onSubmit={e => this.submit(e)}>
-            <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" />
+            <img src="/assets/gratelancer-black.png" className="img-responsive center-block" alt="gratelancer-logo" />
 
                 <FormGroup controlId="first_name" className="form-row">
                 <ControlLabel> Title </ControlLabel>
@@ -152,6 +152,6 @@ class Project extends React.Component {
         </div>
         );
     }
-  } 
+  }
 }
 export default Project;

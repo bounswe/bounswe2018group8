@@ -1,9 +1,5 @@
 #form{
-	background: #ffbdbd;
-	padding: 30px 84px;
+	background: white;
+	padding: 0px 84px 30px 84px;
 	border-radius: 10px;
-}
-
-.btn-primary{
-  background-color: #7ccbff
 }

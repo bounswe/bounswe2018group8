@@ -43,30 +43,31 @@ class LoginForm extends React.Component {
 
   render() {
     return (
+      <React.Fragment>
     <div className="row">
       <div className="col-md-4"></div>
-      <div className="col-md-4" id="form">
+      <div className="col-md-4" id="loginform">
         <form onSubmit={e => this.submit(e)}>
-          <img src="/assets/gratelancer.png" className="img-responsive center-block" alt="gratelancer-logo" />
+          <img src="/assets/gratelancer-black.png" className="img-responsive center-block form-logo" alt="gratelancer-logo" />
 
           <FormGroup controlId="username">
-              <ControlLabel>Username</ControlLabel>
+
               <FormControl
                 autoFocus
                 type="text"
                 name="username"
-                placeholder="Enter your username"
+                placeholder="Username"
                 value={this.state.username}
                 onChange={this.handle_change}
               />
           </FormGroup>
           <FormGroup controlId="password">
-              <ControlLabel>Password</ControlLabel>
+
               <FormControl
                 type="password"
                 name="password"
                 minLength="8"
-                placeholder="Enter your password"
+                placeholder="Password"
                 value={this.state.password}
                 onChange={this.handle_change}
               />
@@ -76,8 +77,9 @@ class LoginForm extends React.Component {
         </div>
         <div className="col-md-4"></div>
       </div>
+      <div className="fill"></div>
+        </React.Fragment>
     );
   }
 }
-
 export default LoginForm;

@@ -1,5 +1,5 @@
 nav.navbar, .navbar-default {
-    background-color: #b16e6e !important;
+    background-color: white;
 }
 
 .navbar-default {
@@ -9,12 +9,13 @@ nav.navbar, .navbar-default {
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: white;
+    color: black;
 }
 
 .navbar-default .navbar-brand {
     color: white;
-    padding: 5px 10px 15px 0px
+    padding: 5px 10px 8px 0px;
+    margin: -1px 40px !important;
 }
 
 .navbar-default .navbar-toggle {
@@ -35,6 +36,24 @@ nav.navbar, .navbar-default {
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-    color: white;
+    color: darkslategrey;
     background-color: transparent;
+}
+
+.navbar-right{
+  margin-right: 100px;
+}
+
+.navbar-form{
+  margin: 0px 0px 0px 70px;
+
+}
+
+.navbar-form .form-group{
+  margin: 0px;
+  width: 250px;
+}
+
+.navbar-form .form-control{
+  width: 100%;
 }

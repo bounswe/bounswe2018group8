@@ -31,10 +31,11 @@
     margin-bottom: 10px;
 }
 
-#form{
-	background: #ffbdbd;
-	padding: 30px 84px;
+#loginform{
+	background: white !important;
+	padding: 0px 84px 30px 84px;
 	border-radius: 10px;
+  margin-top: 30px;
 }
 
 .form-item{
@@ -62,8 +63,4 @@
 }
 .form-submit:hover{
    opacity: 0.6;
-}
-
-.btn-primary{
-  background-color: #7ccbff
 }

@@ -1,4 +1,4 @@
-#form{
+#landing{
 	background: white;
 	padding: 0px 84px 30px 84px;
 	border-radius: 10px;
@@ -12,4 +12,14 @@
 
 .form-control{
 	background-color: #e8ebee;
+}
+
+.well{
+  background-color: white;
+  border: none;
+  padding: 0px;
+}
+
+.fill{
+  min-height: 305px;
 }
