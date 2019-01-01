@@ -163,6 +163,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1800)
+}
+
 ACCOUNT_ADAPTER = 'user.adapter.UserAccountAdapter'
 
 ACCOUNT_EMAIL_REQUIRED = True
