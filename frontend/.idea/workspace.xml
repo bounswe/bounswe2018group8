@@ -44,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="45" column="103" lean-forward="true" selection-start-line="45" selection-start-column="103" selection-end-line="45" selection-end-column="103" />
+            <state relative-caret-position="567">
+              <caret line="60" column="128" lean-forward="true" selection-start-line="60" selection-start-column="128" selection-end-line="60" selection-end-column="128" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -59,7 +59,7 @@
       <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Profile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
+            <state relative-caret-position="15">
               <caret line="58" column="4" lean-forward="false" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
               <folding />
             </state>
@@ -79,7 +79,7 @@
       <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
+            <state relative-caret-position="169">
               <caret line="115" column="135" lean-forward="true" selection-start-line="115" selection-start-column="135" selection-end-line="115" selection-end-column="135" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -100,14 +100,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SelectedProject.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SelectedProject.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/SelectedProject.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="360">
+              <caret line="28" column="52" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginForm.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/LoginForm.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,10 +137,10 @@
         <option value="$PROJECT_DIR$/src/App.jsx" />
         <option value="$PROJECT_DIR$/src/components/Project.js" />
         <option value="$PROJECT_DIR$/src/components/Nav.js" />
-        <option value="$PROJECT_DIR$/src/components/SelectedProject.js" />
         <option value="$PROJECT_DIR$/src/components/CustomNavbar.js" />
         <option value="$PROJECT_DIR$/src/components/Home.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/SelectedProject.js" />
       </list>
     </option>
   </component>
@@ -226,12 +236,12 @@
       <workItem from="1542908049999" duration="7602000" />
       <workItem from="1542961913151" duration="84000" />
       <workItem from="1542966464760" duration="830000" />
-      <workItem from="1546415461137" duration="1948000" />
+      <workItem from="1546415461137" duration="5676000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16255000" />
+    <option name="totallyTimeSpent" value="19983000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -434,16 +444,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Routh.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/components/LoginForm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -499,14 +499,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="58" column="4" lean-forward="false" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Project.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -519,13 +511,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/SelectedProject.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="15">
+          <caret line="58" column="4" lean-forward="false" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="60" column="128" lean-forward="true" selection-start-line="60" selection-start-column="128" selection-end-line="60" selection-end-column="128" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/LoginForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -541,7 +549,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
+        <state relative-caret-position="169">
           <caret line="115" column="135" lean-forward="true" selection-start-line="115" selection-start-column="135" selection-end-line="115" selection-end-column="135" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -549,10 +557,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
+    <entry file="file://$PROJECT_DIR$/src/components/SelectedProject.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="45" column="103" lean-forward="true" selection-start-line="45" selection-start-column="103" selection-end-line="45" selection-end-column="103" />
+        <state relative-caret-position="360">
+          <caret line="28" column="52" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

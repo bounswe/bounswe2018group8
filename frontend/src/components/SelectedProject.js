@@ -7,6 +7,36 @@ import { Button, Modal, FormControl, FormGroup, ControlLabel } from 'react-boots
 import './Profile.css';
 import axios from 'axios';
 
+function BidList({ bids }) {
+
+
+    return <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Bid Amount</th>
+            <th scope="col">Selected</th>
+        </tr>
+        </thead>
+        <tbody>
+        {bids.map((bid, i) => {
+            var url=`/user/${bid.freelancer_username}`;
+            return <tr key={i}>
+                <th scope="row">{i+1}</th>
+                <td><Link to={url}>{bid.freelancer_username}</Link></td>
+                <td>{bid.amount}</td>
+                <td><input type="radio" name="bid_id" value={bid.id}/></td>
+            </tr>})
+        }
+        </tbody>
+    </table>;
+
+    return <ul>
+        {bids.map(bid => <li>Username: {bid.freelancer_username} -> Bid Amount: {bid.amount}</li>)}
+    </ul>;
+}
+
 export default class SelectedProject extends Component {
     constructor() {
         super();
@@ -26,7 +56,7 @@ export default class SelectedProject extends Component {
     }
     
     handleShow() {
-        if(localStorage.getItem('token')== null){
+        if(localStorage.getItem('token')=== null){
             this.setState({ show: false });
         }
         else{
@@ -45,7 +75,7 @@ export default class SelectedProject extends Component {
     };
     // @mehmetcalim: Get API request is added in order to get selected project data.
     componentDidMount() {
-        if(localStorage.getItem('token')!= null){
+        if(localStorage.getItem('token')!== null){
             this.project_id = this.props.match.params.id;
             axios.get("http://52.59.230.90/projects/"+ this.project_id + "/", {
                 headers: {
@@ -53,6 +83,7 @@ export default class SelectedProject extends Component {
                 }
             })
                 .then(res => {
+                    console.log(res.data);
                     this.setState({
                         project: res.data,
                         isLoading: false,
@@ -84,11 +115,13 @@ export default class SelectedProject extends Component {
         }));
     }
 
+
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
         }    
         else{
+            const { user } = this.props;
             const { isLoading, project } = this.state;
             var url=`/user/${project.client_id}`;
             var deadline=project.deadline;
@@ -114,10 +147,14 @@ export default class SelectedProject extends Component {
 
 
 
-                                <div className="col-md-4 col-md-offset-5">   
-                                <Button bsStyle="success" bsSize="large" onClick={this.handleShow}>
-                                    BID
-                                </Button>
+                                <div className="col-md-4 col-md-offset-5">
+                                    {(user && user.id === project.client_id) ?
+                                        <BidList bids={project.bids} />
+                                        :
+                                        <Button disabled={!user} bsStyle="success" bsSize="large" onClick={this.handleShow}>
+                                            BID
+                                        </Button>
+                                    }
                                 </div>
                                 <br/>
                                 <br/>

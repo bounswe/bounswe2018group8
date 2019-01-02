@@ -25,8 +25,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        searchedString: ""
+        searchedString: "",
+        user: null,
     };
+  }
+
+  componentDidMount() {
+    const userInfoString = localStorage.getItem('user');
+    if(userInfoString !== null) {
+      this.setState({
+          user: JSON.parse(userInfoString),
+      });
+    }
   }
 
   handleSearchChange = (searchedString) => {
@@ -48,7 +58,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/project" component={Project} />
               <Route path="/user/:id" component={ClientProfile} />
-              <Route path="/projects/:id" component={SelectedProject} />
+              <Route path="/projects/:id" render={(routeProps) => <SelectedProject {...routeProps} user={this.state.user} />} />
             </div>
           </Router>
       </div>
