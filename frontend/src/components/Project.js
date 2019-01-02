@@ -15,10 +15,11 @@ class Project extends React.Component {
     this.state = {
       title: '',
       description: '',
-      deadline: new Date(),
+      deadline: '',
       max_price: '',
       min_price: '',
     };
+    this.handleChange = this.handleChange.bind(this);
     this.headers = {
         'Content-Type': 'application/json',
         'Authorization': `JWT ${localStorage.getItem('token')}`
@@ -86,61 +87,64 @@ class Project extends React.Component {
             <div className="col-md-4" id="form">
             <form onSubmit={e => this.submit(e)}>
             <img src="/assets/gratelancer-black.png" className="img-responsive center-block" alt="gratelancer-logo" />
+                <ControlLabel className="text-center"> Create a project </ControlLabel>
+                <FormGroup controlId="project_title" className="form-row">
 
-                <FormGroup controlId="first_name" className="form-row">
-                <ControlLabel> Title </ControlLabel>
                 <FormControl
                     autoFocus
                     type="text"
                     name="title"
-                    placeholder="ex: Android Project"
+                    placeholder="Title"
                     value={this.state.title}
                     onChange={this.handle_change}
                 />
                 </FormGroup>{' '}
                 <FormGroup controlId="Description" className="textarea">
-                <ControlLabel> Description </ControlLabel>
+
                 <FormControl
-                    type="text"
+                    componentClass="textarea"
+                    rows={6}
+                    type="textarea"
                     name="description"
-                    placeholder="ex: Tetris"
+                    placeholder="Description"
                     value={this.state.description}
                     onChange={this.handle_change}
                 />
                 </FormGroup>
                 <FormGroup controlId="Deadline" className="form-row">
-                <ControlLabel>Deadline</ControlLabel>
-                    <br/>
+
+
                     <DatePicker
                         showTimeSelect
                         timeFormat="HH:mm"
+                        placeholderText="Deadline"
                         timeIntervals={15}
                         timeCaption="time"
                         dateFormat="yyyy/MM/dd h:mm aa"
                         selected={this.state.deadline}
                         value={this.state.deadline}
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.handleChange}
                     />
 
                 </FormGroup>
                 <FormGroup controlId="max_price" className="form-row">
-                <ControlLabel>Max price</ControlLabel>
+
                 <FormControl
                     type="text"
                     name="max_price"
                     pattern="[0-9]*"
-                    placeholder="ex: 1000"
+                    placeholder="Maximum Bid Price (&#8378;)"
                     value={this.state.max_price}
                     onChange={this.handle_change}
                 />
                 </FormGroup>
                 <FormGroup controlId="min_price" className="form-row">
-                <ControlLabel>Min price</ControlLabel>
+
                 <FormControl
                     type="text"
                     name="min_price"
                     pattern="[0-9]*"
-                    placeholder="ex: 500"
+                    placeholder="Minimum Bid Price (&#8378;)"
                     value={this.state.min_price}
                     onChange={this.handle_change}
                 />
