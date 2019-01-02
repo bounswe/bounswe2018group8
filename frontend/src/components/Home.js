@@ -27,7 +27,7 @@ export default class Home extends React.Component {
     // mehmetcalim: this function send get reqeust to get all projects to homepage.
 
     componentDidMount() {
-        axios.get("http://52.59.230.90/projects")
+        axios.get("http://52.59.230.90/projects/")
             .then(res => {
                 this.setState({
                     projects:res.data,
