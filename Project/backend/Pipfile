@@ -13,6 +13,7 @@ mysqlclient = "*"
 django-allauth = "*"
 djangorestframework-jwt = "*"
 django-rest-auth = {version = "*", extras = ["with_social"]}
+pillow = "*"
 
 [requires]
 python_version = "3.7"

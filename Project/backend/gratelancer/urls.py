@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.urls import path, include
 from user.views import LogoutViewEx
 from rest_auth.views import LoginView, UserDetailsView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.conf.urls.static import static
+from django.conf import settings
 
 # URL patterns for the URL dispatcher.
 # Author: Umut Barış Öztunç, Ozan Kınasakal
@@ -16,4 +18,4 @@ urlpatterns = [
     path('register/', include('rest_auth.registration.urls')),
     path('users/', include('user.urls')),
     path('projects/', include('project.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

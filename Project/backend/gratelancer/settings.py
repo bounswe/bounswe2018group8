@@ -137,6 +137,10 @@ STATIC_URL = '/static/'
 # Some custom settings
 # Set by Umut Barış Öztunç
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (URL_FRONT,'localhost:3000')

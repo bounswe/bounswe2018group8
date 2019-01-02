@@ -13,7 +13,10 @@ class Project(models.Model):
     status = models.CharField(max_length=30)
     average_bid = models.FloatField(default=0.0)
     bid_count = models.IntegerField(default=0)
-    
+    image = models.ImageField(
+        upload_to = 'images/projects', 
+        default = 'images/projects/no-image.jpg'
+    )
     
 
 

@@ -51,8 +51,9 @@ class SkillSerializer(serializers.ModelSerializer):
 # Author: Umut Baris Oztunc
 class UserSerializer(UserDetailsSerializer):
     skills = SkillSerializer(many=True)
+
     class Meta(UserDetailsSerializer.Meta):
-        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('bio', 'skills', 'balance',)
+        fields = ('id',) + UserDetailsSerializer.Meta.fields + ('bio', 'skills', 'balance', 'avatar',)
         read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'balance',)
         
     def __init__(self, *args, **kwargs):
