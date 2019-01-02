@@ -54,7 +54,7 @@ export default class SelectedProject extends Component {
     handleClose() {
         this.setState({ show: false });
     }
-    
+
     handleShow() {
         if(localStorage.getItem('token')=== null){
             this.setState({ show: false });
@@ -102,7 +102,7 @@ export default class SelectedProject extends Component {
         axios.post('http://52.59.230.90/projects/' + project.id +'/bid/',
             {
             amount: this.state.amount,
-            }, 
+            },
             {
             headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`
@@ -119,27 +119,28 @@ export default class SelectedProject extends Component {
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
-        }    
+        }
         else{
             const { user } = this.props;
             const { isLoading, project } = this.state;
             var url=`/user/${project.client_id}`;
             var deadline=project.deadline;
+            var options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric' }
             return (
             <React.Fragment>
                 <div className="row">
                     <div className="col-md-4"></div>
                     <div className="col-md-4" id="selected_profile">
-                    <h2><b>Project Details</b></h2>
+                    <h2 className='text-center'><b>Project Details</b></h2>
                     <hr/>
                         <div>
                         {!isLoading ? (
                             <div key={project.id} className="project">
                                 <p><b>{project.title}</b></p>
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
-                                <p><b>Project's owner: </b><Link to={url}>{project.client_username}</Link></p>
+                                <p><b>Owner: </b><Link to={url}>{project.client_username}</Link></p>
                                 <p><b>Description: </b>{project.description}</p>
-                                <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
+                                <p><b>Deadline: </b>{new Date(deadline).toLocaleDateString('en-GB',options) + (new Date(deadline)-new Date()).to}</p>
                                 <p><b>Price: </b>{project.min_price} - {project.max_price} &#8378;</p>
                                 <p><b>Status: </b>{project.status}</p>
                                 <p><b>Average Bid:</b><br/>{project.average_bid+'\n'}</p>
@@ -147,25 +148,24 @@ export default class SelectedProject extends Component {
 
 
 
-                                <div className="col-md-4 col-md-offset-5">
+                                <div className="text-center">
                                     {(user && user.id === project.client_id) ?
                                         <BidList bids={project.bids} />
                                         :
-                                        <Button disabled={!user} bsStyle="success" bsSize="large" onClick={this.handleShow}>
+                                        <Button disabled={!user} bsStyle="success" onClick={this.handleShow}>
                                             BID
                                         </Button>
                                     }
                                 </div>
-                                <br/>
-                                <br/>
+
                                 <Modal show={this.state.show} onHide={this.handleClose}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Request to bid on this project</Modal.Title>
+                                        <Modal.Title>Bid Request</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <form onSubmit={e => this.submit(e)}>
                                             <FormGroup controlId="amount">
-                                                <ControlLabel>Please specify your bid amount</ControlLabel>
+                                                <ControlLabel>Please specify the amount in &#8378;</ControlLabel>
                                                 <FormControl
                                                     autoFocus
                                                     type="text"
@@ -184,19 +184,19 @@ export default class SelectedProject extends Component {
                                         <Button onClick={this.handleClose}>Close</Button>
                                     </Modal.Footer>
                                 </Modal>
-                                
+
                         </div>
 
                         ) : (
                         <p>Loading...</p>
                     )}
-                    
+
                         </div>
                     </div>
                     <div className="col-md-4"></div>
                 </div>
             </React.Fragment>
             );
-        }    
+        }
     }
 }
