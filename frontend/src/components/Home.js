@@ -5,6 +5,7 @@ import React from 'react';
 import { Button, Modal, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import  { Link } from 'react-router-dom';
 import axios from 'axios';
+import TextTruncate from 'react-text-truncate';
 
 import './Home.css';
 
@@ -123,7 +124,7 @@ export default class Home extends React.Component {
                                 url2=`/projects/${id}`;
                             }
                             else{
-                                clientname="(login to see who is the owner of this project)"
+                                clientname="(Login to see)"
                                 url="/";
                                 url2="/";
                             }
@@ -132,7 +133,14 @@ export default class Home extends React.Component {
                                 <p><b>{title}</b></p>
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
                                 <p><b>Owner: </b><Link to={url}>{clientname}</Link></p>
-                                <p><b>Description: </b>{description}</p>
+                                <p><b>Description: </b>
+                                  <TextTruncate
+                                      line={3}
+                                      truncateText="…"
+                                      text={description}
+                                      textTruncateChild={<a href={url2}>Read on</a>}
+                                  />
+                                </p>
                                 <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
                                 <p><b>Status: </b>{status}</p>

@@ -10,7 +10,8 @@
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-text-truncate": "^0.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
