@@ -140,7 +140,7 @@ export default class SelectedProject extends Component {
                                 <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
                                 <p><b>Owner: </b><Link to={url}>{project.client_username}</Link></p>
                                 <p><b>Description: </b>{project.description}</p>
-                                <p><b>Deadline: </b>{new Date(deadline).toLocaleDateString('en-GB',options) + (new Date(deadline)-new Date()).to}</p>
+                                <p><b>Deadline: </b>{new Date(deadline).toLocaleDateString('en-GB',options)}</p>
                                 <p><b>Price: </b>{project.min_price} - {project.max_price} &#8378;</p>
                                 <p><b>Status: </b>{project.status}</p>
                                 <p><b>Average Bid:</b><br/>{project.average_bid+'\n'}</p>
@@ -175,7 +175,7 @@ export default class SelectedProject extends Component {
                                                     onChange={this.handle_change}
                                                 />
                                             </FormGroup>
-                                            <button type="submit" className="btn btn-primary" href="/home">Request</button>
+                                            <button type="submit" className="btn btn-success" href="/home">Request</button>
                                         </form>
                                         <br/>
                                         <br/>

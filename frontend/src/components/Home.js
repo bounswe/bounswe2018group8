@@ -96,6 +96,7 @@ export default class Home extends React.Component {
         var clientname;
         var url;
         var url2;
+        var options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric' }
         // <div className="row">
         //     <div className="col-md-12">
         //         <Button bsStyle="primary" href="/project">
@@ -142,7 +143,7 @@ export default class Home extends React.Component {
                                       textTruncateChild={<a href={url2}>Read on</a>}
                                   />
                                 </p>
-                                <p><b>Deadline: </b>{deadline.toString().substr(0,10) + " " + deadline.toString().substr(11,5)}</p>
+                                <p><b>Deadline: </b>{new Date(deadline).toLocaleDateString('en-GB',options)}</p>
                                 <p><b>Price: </b>{min_price} - {max_price} &#8378;</p>
                                 <p><b>Status: </b>{status}</p>
                                 <p className="text-center">
