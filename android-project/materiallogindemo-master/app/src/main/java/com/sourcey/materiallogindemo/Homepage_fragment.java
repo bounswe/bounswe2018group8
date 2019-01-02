@@ -53,6 +53,7 @@ public class Homepage_fragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         final ListView projectsList = (ListView)homepageView.findViewById(R.id.projectList);
         projectsList.setAdapter(new ProjectAdapter(getActivity(),ProjectList));
         projectsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +68,8 @@ public class Homepage_fragment extends Fragment {
                 Fragment fragment = (Fragment) new one_project_fragment();
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(android.R.id.content, fragment);
+                fragmentTransaction.addToBackStack(null);
+
                 fragmentTransaction.commit();
             }
         });
@@ -99,6 +102,7 @@ public class Homepage_fragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(), field+"\n"+str, Toast.LENGTH_LONG).show();
     }
     public void onGetProjectsSuccess() throws JSONException, ParseException {
+        ProjectList= new ArrayList<>();
         JSONArray jsonArray = new JSONArray(response);
         for (int i = 0 ; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
@@ -115,9 +119,10 @@ public class Homepage_fragment extends Fragment {
             String description = obj.getString("description");
             int max_price = obj.getInt("max_price");
             int min_price = obj.getInt("min_price");
-            Log.d("TAG", client_username+max_price);
+            Log.d("TAG", ProjectList.size()+"");
             Project project= new Project(id,title,description,deadline,max_price,min_price,status,client_id,freelancer_id,freelancer_username,client_username);
             ProjectList.add(project);
+
         }
     }
     public int getPK(){

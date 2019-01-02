@@ -51,7 +51,6 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
-    @BindView(R.id.input_userType) Spinner _isClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,11 +114,11 @@ public class SignupActivity extends AppCompatActivity {
         final String reEnterPassword = _reEnterPasswordText.getText().toString();
         final String firstName= _firstnameText.getText().toString();
         final String lastName= _lastnameText.getText().toString();
-        final String isClient= _isClient.getSelectedItem().toString();
-        boolean is_client=false;
-        if(isClient.equals("Client")){
+        //final String isClient= _isClient.getSelectedItem().toString();
+        //boolean is_client=false;
+        /*if(isClient.equals("Client")){
             is_client=true;
-        }
+        }*/
 
         // TODO: Implement your own signup logic here.
 
@@ -130,7 +129,7 @@ public class SignupActivity extends AppCompatActivity {
         jsonToPost.put("email", email);
         jsonToPost.put("first_name", firstName);
         jsonToPost.put("last_name", lastName);
-        jsonToPost.put("is_client", is_client);
+        //jsonToPost.put("is_client", is_client);
 
 
         HttpPostAsyncTask myTask= new HttpPostAsyncTask(jsonToPost,this, "");

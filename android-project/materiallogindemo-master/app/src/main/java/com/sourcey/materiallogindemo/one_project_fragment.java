@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,6 +54,7 @@ public class one_project_fragment extends Fragment {
     TextView status;
     TextView price_range;
     TextView deadline;
+    TextView owner;
     Button bidButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,8 +70,13 @@ public class one_project_fragment extends Fragment {
         status=oneProjectView.findViewById(R.id.status);
         deadline=oneProjectView.findViewById(R.id.deadline);
         price_range=oneProjectView.findViewById(R.id.price_range);
+        owner=oneProjectView.findViewById(R.id.owner);
         bidButton=oneProjectView.findViewById(R.id.bidButton);
-        bidButton.setOnClickListener(new View.OnClickListener() {
+        if(token==(null)|| token==""){
+            bidButton.setVisibility(View.GONE);
+        }
+        bidButton.setOnClickListener(
+                new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -79,7 +86,7 @@ public class one_project_fragment extends Fragment {
                     // Set up the input
                 final EditText input = new EditText(((HomepageActivity)getActivity()));
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 builder.setView(input);
 
 // Set up the buttons
@@ -87,6 +94,15 @@ public class one_project_fragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         bid = input.getText().toString();
+                        try {
+                            bid(bid);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -116,6 +132,29 @@ public class one_project_fragment extends Fragment {
 
         return oneProjectView;
     }
+
+    public void bid(String bid) throws JSONException, ExecutionException, InterruptedException {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Bidding...");
+        progressDialog.show();
+        JSONObject jsonToPost = new JSONObject();
+        jsonToPost.put("amount", bid);
+        HttpPostAsyncTask myTask = new HttpPostAsyncTask(jsonToPost, getActivity().getApplicationContext(), token);
+        String theResponse = myTask.execute("http://52.59.230.90/projects/"+id+"/bid/").get();
+        int statusCode = Integer.parseInt(theResponse.substring(0, 3));
+        response = theResponse.substring(3);
+        progressDialog.dismiss();
+        if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+            onGetProjectFailure();
+        }
+        else if(statusCode==HttpURLConnection.HTTP_OK){
+            Toast.makeText(getActivity().getApplicationContext(), "Your bid is accepted.", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void getProject() throws ExecutionException, InterruptedException, JSONException, ParseException {
         HttpGetAsyncTask myTask = new HttpGetAsyncTask(getActivity(),token);
         String theResponse = myTask.execute("http://52.59.230.90/projects/"+id+"/").get();
@@ -151,16 +190,17 @@ public class one_project_fragment extends Fragment {
         String strdate= dateFormat.format(deadlinee);
 
         title.setText(obj.getString("title"));
+        owner.setText("Owner:\n"+obj.getString("client_username"));
         description.setText(obj.getString("description"));
-        deadline.setText("Deadline: "+strdate);
-        status.setText("Status: "+obj.getString("status"));
+        deadline.setText("Deadline:\n"+strdate);
+        status.setText("Status:\n"+obj.getString("status"));
         if(obj.getString("status").equals("active")){
             status.setTextColor(Color.GREEN);
         }
         else{
             status.setTextColor(Color.RED);
         }
-        String pricerange="Price range: "+obj.getString("min_price")+"-"+obj.getString("max_price");
+        String pricerange="Price range:\n"+obj.getString("min_price")+"-"+obj.getString("max_price");
         price_range.setText(pricerange);
         price_range.setTextColor(Color.YELLOW);
     }

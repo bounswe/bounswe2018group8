@@ -32,6 +32,7 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
     Context mContext;
     int statusCode;
     String token;
+    String method;
     // This is a constructor that allows you to pass in the JSON body
     public HttpPostAsyncTask(JSONObject postData, Context mContext, String token) {
         if (postData != null) {
@@ -40,7 +41,14 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
         this.mContext= mContext;
         this.token= token;
     }
-
+    public HttpPostAsyncTask(JSONObject postData, Context mContext, String token,String method) {
+        if (postData != null) {
+            this.postData = postData;
+        }
+        this.mContext= mContext;
+        this.token= token;
+        this.method=method;
+    }
     // This is a function that we are overriding from AsyncTask. It takes Strings as parameters because that is what we defined for the parameters of our async task
     @Override
     protected String doInBackground(String... params) {
@@ -57,6 +65,9 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, String> {
 
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
+            if(method!="" && method!=(null)){
+                urlConnection.setRequestMethod("PATCH");
+            }
             Log.d("WhatDoWeSend", token);
             if(token!=null && token.length()>0){
                 urlConnection.setRequestProperty("Authorization", "JWT "+token);

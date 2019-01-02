@@ -39,24 +39,36 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             />
 
-
         <TextView
-            android:id="@+id/deadline"
+            android:id="@+id/owner"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:gravity="end"
             android:textStyle="italic"
-            android:textColor="@android:color/holo_blue_bright"
+            android:textColor="@android:color/holo_orange_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/deadline"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="end"
+            android:textStyle="italic"
+            android:textColor="@android:color/holo_blue_bright"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/owner" />
 
 
         <TextView
             android:id="@+id/price_range"
             android:layout_width="80dp"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
@@ -71,7 +83,7 @@
         <TextView
             android:id="@+id/status"
             android:layout_width="80dp"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"

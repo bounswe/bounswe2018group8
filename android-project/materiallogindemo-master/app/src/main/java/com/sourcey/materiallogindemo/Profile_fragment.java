@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class Profile_fragment extends Fragment{
     Button deposit;
     TextView email;
     TextView username;
+    TextView edit_button;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,12 +55,12 @@ public class Profile_fragment extends Fragment{
         token=((HomepageActivity)getActivity()).getToken();
         name=profilePageView.findViewById(R.id.name);
         surname=profilePageView.findViewById(R.id.surname);
-        is_client=profilePageView.findViewById(R.id.is_client);
         bio=profilePageView.findViewById(R.id.bio);
         balance=profilePageView.findViewById(R.id.balance);
         email=profilePageView.findViewById(R.id.email);
         username=profilePageView.findViewById(R.id.username);
         deposit=profilePageView.findViewById(R.id.deposit);
+        edit_button=profilePageView.findViewById(R.id.edit_profile);
         deposit.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -77,6 +79,15 @@ public class Profile_fragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         depositAmount = input.getText().toString();
+                        try {
+                            depositToAccount(depositAmount);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -87,6 +98,12 @@ public class Profile_fragment extends Fragment{
                 });
 
                 builder.show();
+            }
+        });
+        edit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    edit();
             }
         });
         try {
@@ -102,6 +119,42 @@ public class Profile_fragment extends Fragment{
         }
         return profilePageView;
     }
+
+    public void edit() {
+        FragmentManager fragmentManager = getFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putString("token", token);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = (Fragment) new edit_fragment();
+        fragment.setArguments(bundle);
+        fragmentTransaction.replace(android.R.id.content, fragment);
+
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void depositToAccount(String depositAmount) throws JSONException, ExecutionException, InterruptedException {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Bidding...");
+        progressDialog.show();
+        JSONObject jsonToPost = new JSONObject();
+        jsonToPost.put("amount", depositAmount);
+        HttpPostAsyncTask myTask = new HttpPostAsyncTask(jsonToPost, getActivity().getApplicationContext(), token);
+        String theResponse = myTask.execute("http://52.59.230.90/users/self/deposit/").get();
+        int statusCode = Integer.parseInt(theResponse.substring(0, 3));
+        response = theResponse.substring(3);
+        progressDialog.dismiss();
+        if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+            onGetSelfFailure();
+        }
+        else if(statusCode==HttpURLConnection.HTTP_OK){
+            Toast.makeText(getActivity().getApplicationContext(), "Your deposit is added to your account!", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void getSelf() throws ExecutionException, InterruptedException, JSONException, ParseException {
         HttpGetAsyncTask myTask = new HttpGetAsyncTask(getActivity(),token);
         String theResponse = myTask.execute("http://52.59.230.90/users/self").get();
@@ -134,14 +187,6 @@ public class Profile_fragment extends Fragment{
         surname.setText("surname: "+obj.getString("last_name"));
         bio.setText("bio: "+obj.getString("bio"));
         balance.setText("balance: "+obj.getString("balance"));
-        String isClient= obj.getString("is_client");
-        if(isClient.equals("true")){
-            isClient="client";
-        }
-        else{
-            isClient="freelancer";
-        }
-        is_client.setText("user type: "+isClient);
         email.setText("email: "+obj.getString("email"));
         username.setText("username: "+obj.getString("username"));
 

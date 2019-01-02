@@ -90,6 +90,7 @@ public class HomepageActivity  extends AppCompatActivity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = (Fragment) new Profile_fragment();
         fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -98,6 +99,7 @@ public class HomepageActivity  extends AppCompatActivity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = (Fragment) new Workspage_fragment();
         fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -106,6 +108,7 @@ public class HomepageActivity  extends AppCompatActivity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = (Fragment) new Homepage_fragment();
         fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -177,8 +180,21 @@ public class HomepageActivity  extends AppCompatActivity{
     }
     @Override
     public void onBackPressed() {
-        // Disable going back to the MainActivity
-        moveTaskToBack(true);
+        int count = getFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
+            Log.d("beni oku", count+"");
+        }
+
+    }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        //When BACK BUTTON is pressed, the activity on the stack is restarted
+        //Do what you want on the refresh procedure here
     }
     public String JSONObjectToString(String str,String field) throws JSONException, IOException {
         JSONObject json = new JSONObject(str);

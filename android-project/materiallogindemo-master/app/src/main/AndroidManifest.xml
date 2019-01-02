@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.sourcey.materiallogindemo.SignupActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="com.sourcey.materiallogindemo.HomepageActivity" android:theme="@style/AppTheme.WithActionBar" />
+        <activity android:name="com.sourcey.materiallogindemo.HomepageActivity" android:theme="@style/AppTheme.WithActionBar" android:windowSoftInputMode="adjustPan" />
         <activity android:name="com.sourcey.materiallogindemo.ForgetPasswordActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name="com.sourcey.materiallogindemo.ProjectCreationActivity" android:theme="@style/AppTheme.Dark" />
 
