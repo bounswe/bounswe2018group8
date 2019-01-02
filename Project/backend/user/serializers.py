@@ -68,7 +68,7 @@ class UserSerializer(UserDetailsSerializer):
         
     def to_internal_value(self, data):
         skills_data = data.get('skills')
-        if isinstance(skills, list):
+        if isinstance(skills_data, list):
             skills = []
             for skill in skills_data:
                 skills.append({'name': skill})
