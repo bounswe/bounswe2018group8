@@ -34,7 +34,6 @@ export default class Home extends React.Component {
                     projects:res.data,
                     isLoading: false
                 });
-                //localStorage.setItem('projects_info', JSON.stringify(res.data));
             })
             .catch(error => this.setState({ error, isLoading: false }));
     }
@@ -82,7 +81,6 @@ export default class Home extends React.Component {
             }
             }
         ).then(res => {
-          //localStorage.setItem('project_details', res.data);
         }).catch(() => this.setState({
           error: true
         }));
@@ -97,18 +95,6 @@ export default class Home extends React.Component {
         var url;
         var url2;
         var options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric' }
-        // <div className="row">
-        //     <div className="col-md-12">
-        //         <Button bsStyle="primary" href="/project">
-        //             Create a project
-        //         </Button>
-        //         <input className="pull-right"
-        //                type="text"
-        //                placeholder="Search..."
-        //                value = {this.state.search}
-        //                onChange={this.updateSearch.bind(this)}/>
-        //     </div>
-        // </div>
         return (
           <React.Fragment>
             <div className="row">
