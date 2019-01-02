@@ -110,9 +110,11 @@ export default class SelectedProject extends Component {
             }
         ).then(res => {
           //localStorage.setItem('project_details', res.data);
+          window.location = '/projects/' + project.id;
         }).catch(() => this.setState({
           error: true
         }));
+
     }
 
 

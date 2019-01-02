@@ -117,7 +117,7 @@ export default class Home extends React.Component {
                     {!isLoading ? (
                         projects.filter(project => project.title.toLowerCase().includes(searchedString.toLowerCase())).map(project => {
                             const { id, client_id, client_username, freelancer_id, freelancer_username, status, bids, title,
-                                description, max_price, min_price, deadline} = project;
+                                description, max_price, min_price, deadline, image} = project;
                                 this.project_id={id};
                             if(localStorage.getItem('token')!= null){
                                 project_id=id;
@@ -133,7 +133,7 @@ export default class Home extends React.Component {
                         return (
                             <div key={id} className="project">
                                 <p><b>{title}</b></p>
-                                <img src="/assets/freelancer1.jpg" className="img-responsive center-block" />
+                                <img src={image} className="img-responsive center-block" />
                                 <p><b>Owner: </b><Link to={url}>{clientname}</Link></p>
                                 <p><b>Description: </b>
                                   <TextTruncate
