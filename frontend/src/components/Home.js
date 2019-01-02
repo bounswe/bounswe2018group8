@@ -89,6 +89,7 @@ export default class Home extends React.Component {
 
     //kubraeryılmaz: searching is done by filtering while mapping.
     render() {
+        const { searchedString } = this.props;
         const { isLoading, projects } = this.state;
         var project_id;
         var clientname;
@@ -112,7 +113,7 @@ export default class Home extends React.Component {
                 <div className="col-md-3"></div>
                 <div className="col-md-6" id="feed">
                     {!isLoading ? (
-                        projects.filter(project => project.title.toLowerCase().includes(this.state.search.toLowerCase())).map(project => {
+                        projects.filter(project => project.title.toLowerCase().includes(searchedString.toLowerCase())).map(project => {
                             const { id, client_id, client_username, freelancer_id, freelancer_username, status, bids, title,
                                 description, max_price, min_price, deadline} = project;
                                 this.project_id={id};

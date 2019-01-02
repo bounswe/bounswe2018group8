@@ -112,6 +112,8 @@ export default class SelectedProject extends Component {
                                 <p><b>Average Bid:</b><br/>{project.average_bid+'\n'}</p>
                                 <p><b>Total number of bids:</b><br/>{project.bid_count+'\n'}</p>
 
+
+
                                 <div className="col-md-4 col-md-offset-5">   
                                 <Button bsStyle="success" bsSize="large" onClick={this.handleShow}>
                                     BID

@@ -21,15 +21,29 @@ import './App.css';
   and signup pages into 2 URLs instead of case usage on main page.
 */
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        searchedString: ""
+    };
+  }
+
+  handleSearchChange = (searchedString) => {
+      this.setState({
+          searchedString
+      });
+  };
+
   render() {
     return (
       <div className="App">
           <Router>
             <div>
-              <CustomNavbar/>
+              <CustomNavbar onSearchChanged={this.handleSearchChange} />
               <Route exact path="/"  component={Landing}/>
               <Route path="/profile" component={Profile} />
-              <Route path="/home" component={Home} />
+              <Route path="/home" render={() => <Home searchedString={this.state.searchedString} />} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/project" component={Project} />

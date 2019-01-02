@@ -5,6 +5,7 @@ import './CustomNavbar.css';
 
 export default class CustomNavbar extends Component {
     render(){
+        const { onSearchChanged } = this.props;
         return(
            <Navbar>
                <Navbar.Header>
@@ -17,7 +18,7 @@ export default class CustomNavbar extends Component {
                <Navbar.Collapse>
                    <Navbar.Form pullLeft>
                        <FormGroup>
-                           <FormControl type="text" placeholder="Search" />
+                           <FormControl type="text" placeholder="Search" onChange={(ev) => onSearchChanged(ev.target.value)} />
                        </FormGroup>{' '}
                        <Button type="submit"><span className="glyphicon glyphicon-search"></span></Button>
                    </Navbar.Form>
