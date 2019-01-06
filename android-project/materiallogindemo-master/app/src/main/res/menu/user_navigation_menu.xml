@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_homepage"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Homepage"
+        android:visible="false"/>
+    <item
+        android:id="@+id/menu_works"
+        android:icon="@drawable/baseline_work_24"
+        android:title="My works" />
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/baseline_face_24"
+        android:title="My Profile" />
+    <item
+        android:id="@+id/menu_create"
+        android:icon="@drawable/baseline_add_circle_24"
+        android:title="Create project" />
+</menu>
