@@ -85,11 +85,12 @@ export default class Profile extends Component {
                 <div className="row">
                     <div className="col-md-4"></div>
                     <div className="col-md-4" id="profile">
-                    <h2><b>User Profile</b></h2>
+                    <h2 className="text-center"><b>User Profile</b></h2>
                     <hr/>
                         <div>
                         {!isLoading ? (
                             <div key={user.pk}>
+                                <img src={user.avatar} className="img-responsive center-block" />
                                 <p><b>Name: </b>{user.first_name}</p>
                                 <p><b>Surname: </b>{user.last_name}</p>
                                 <p><b>Email: </b>{user.email}</p>
