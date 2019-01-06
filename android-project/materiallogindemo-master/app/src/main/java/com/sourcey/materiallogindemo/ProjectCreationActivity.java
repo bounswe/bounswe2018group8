@@ -1,3 +1,11 @@
+/**
+ * This class is used for project creation.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
 package com.sourcey.materiallogindemo;
 
 import android.app.ProgressDialog;

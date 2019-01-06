@@ -1,3 +1,11 @@
+/**
+ * This class is for the homepage activity itself. It manages 4 fragments-> homepage, myworks page, profile page and project creation page.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
 package com.sourcey.materiallogindemo;
 
 import android.app.Fragment;
@@ -76,6 +84,7 @@ public class HomepageActivity  extends AppCompatActivity{
                             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                             break;
                         case R.id.menu_works:
+                            goToWorksPage();
                             break;
                     }
                     return false;

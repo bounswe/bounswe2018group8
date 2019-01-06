@@ -1,3 +1,12 @@
+/**
+ * This class is base activity that opens loginActivity immediately.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
+
 package com.sourcey.materiallogindemo;
 
 import android.content.Intent;

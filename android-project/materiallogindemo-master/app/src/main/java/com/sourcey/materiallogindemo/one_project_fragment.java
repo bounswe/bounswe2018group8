@@ -1,3 +1,14 @@
+/**
+ * This class is here for one project. When you select a project to see details, this class is used.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
+
+
+
 package com.sourcey.materiallogindemo;
 
 import android.app.AlertDialog;
@@ -55,6 +66,8 @@ public class one_project_fragment extends Fragment {
     TextView price_range;
     TextView deadline;
     TextView owner;
+    TextView bidCount;
+    TextView averageBid;
     Button bidButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +84,8 @@ public class one_project_fragment extends Fragment {
         deadline=oneProjectView.findViewById(R.id.deadline);
         price_range=oneProjectView.findViewById(R.id.price_range);
         owner=oneProjectView.findViewById(R.id.owner);
+        bidCount=oneProjectView.findViewById(R.id.bidCount);
+        averageBid=oneProjectView.findViewById(R.id.averageBid);
         bidButton=oneProjectView.findViewById(R.id.bidButton);
         if(token==(null)|| token==""){
             bidButton.setVisibility(View.GONE);
@@ -194,6 +209,8 @@ public class one_project_fragment extends Fragment {
         description.setText(obj.getString("description"));
         deadline.setText("Deadline:\n"+strdate);
         status.setText("Status:\n"+obj.getString("status"));
+        averageBid.setText("Average bid:\n"+ obj.getString("average_bid"));
+        bidCount.setText("Bid count:\n"+ obj.getString("bid_count"));
         if(obj.getString("status").equals("active")){
             status.setTextColor(Color.GREEN);
         }
