@@ -1,3 +1,7 @@
+/*
+@author: Ozan Kınasakal
+*/
+
 #feed{
 
 	padding: 0px 84px;
@@ -6,27 +10,25 @@
 
 
 .project{
-  border-radius: 16px;
-/* border-width: 10px; */
-/* border-color: black; */
-border: 1px solid;
-padding: 15px;
-margin: 20px 0;
-background-color: white;
+	border-radius: 16px;
+	border: 1px solid;
+	padding: 15px;
+	margin: 20px 0;
+	background-color: white;
 }
 
 .project .img-responsive{
-  margin-bottom: 8px;
+	margin-bottom: 8px;
 }
 
 .logo{
 	border: 1px solid;
-  border-radius: 125px;
-  border-color: white;
-  background-color: white;
+	border-radius: 125px;
+	border-color: white;
+	background-color: white;
 	margin-top: 50px;
 	margin-bottom: 30px;
 }
 hr{
-  border-color: #e8ebee;
+	border-color: #e8ebee;
 }

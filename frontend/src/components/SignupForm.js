@@ -58,6 +58,7 @@ class SignupForm extends React.Component {
   }
 
   // @mehmetcalim: Shows sign-up form.
+  // @ozankinasakal: changed the design of the form. 
   render() {
     return (
       <div className="row">

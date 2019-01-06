@@ -95,6 +95,7 @@ export default class SelectedProject extends Component {
     }
 
     // @mehmetcalim: Submit button to bid project.
+    // @ozankinasakal: redirect the page after the bid is submitted.
 
     submit(e) {
         e.preventDefault();
@@ -123,6 +124,7 @@ export default class SelectedProject extends Component {
             return <Redirect to='/' />
         }
         // @mehmetcalim: Else shows details of selected project.
+        // @ozankinasakal: Changed format of average bid and deadline, edited the design.
         else{
             const { user } = this.props;
             const { isLoading, project } = this.state;

@@ -56,7 +56,7 @@ export default class Home extends React.Component {
     updateSearch(event){
         this.setState({search: event.target.value});
     }
-    // 
+    //
     handle_change = e => {
         const name = e.target.name;
         const value = e.target.value;
@@ -118,6 +118,7 @@ export default class Home extends React.Component {
                                 url2="/";
                             }
                         // @mehmetcalim: shows all details of projects.
+                        // @ozankinasakal: formatting the date, truncate text description for more than 3 lines.
                         return (
                             <div key={id} className="project">
                                 <p><b>{title}</b></p>
