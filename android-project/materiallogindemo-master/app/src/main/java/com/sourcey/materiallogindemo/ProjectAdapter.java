@@ -1,3 +1,11 @@
+/**
+ * This class helps adaptating the projects to the ListView.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
 package com.sourcey.materiallogindemo;
 
 import android.content.Context;

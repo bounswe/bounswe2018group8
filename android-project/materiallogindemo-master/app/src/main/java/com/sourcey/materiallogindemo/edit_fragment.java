@@ -1,3 +1,10 @@
+/**
+ * This class is for editing the profile page.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
 package com.sourcey.materiallogindemo;
 
 import android.app.AlertDialog;
@@ -25,11 +32,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class edit_fragment extends Fragment {
-    EditText email;
     EditText name;
     EditText surname;
     EditText bio;
-    EditText username;
     String token;
     String response;
     Button change_button;
@@ -41,11 +46,9 @@ public class edit_fragment extends Fragment {
         token = args.getString("token",""); //Record token of person
         View editPageView;
         editPageView = inflater.inflate(R.layout.fragment_edit, container, false);
-        email=editPageView.findViewById(R.id.email);
         name=editPageView.findViewById(R.id.name);
         bio=editPageView.findViewById(R.id.bio);
         surname=editPageView.findViewById(R.id.surname);
-        username=editPageView.findViewById(R.id.username);
         change_button=editPageView.findViewById(R.id.change_button);
         token=((HomepageActivity)getActivity()).getToken();
         change_button.setOnClickListener(new View.OnClickListener() {
@@ -67,18 +70,21 @@ public class edit_fragment extends Fragment {
     }
 
     public void change() throws JSONException, ExecutionException, InterruptedException {
-        final String emailText = email.getText().toString();
-        final String usernameText = username.getText().toString();
         final String bioText = bio.getText().toString();
         final String nameText = name.getText().toString();
         final String surnameText = surname.getText().toString();
 
         JSONObject jsonToPost = new JSONObject();
-        jsonToPost.put("username", usernameText);
-        jsonToPost.put("email", emailText);
-        jsonToPost.put("bio", bioText);
-        jsonToPost.put("first_name", nameText);
-        jsonToPost.put("last_name", surnameText);
+
+        if(bioText!=null && !bioText.equals("")) {
+            jsonToPost.put("bio", bioText);
+        }
+        if(nameText!=null && !nameText.equals("")) {
+            jsonToPost.put("first_name", nameText);
+        }
+        if(surnameText!=null && !surnameText.equals("")) {
+            jsonToPost.put("last_name", surnameText);
+        }
 
         HttpPostAsyncTask myTask = new HttpPostAsyncTask(jsonToPost, getActivity().getApplicationContext(), token,"PATCH");
         String theResponse = myTask.execute("http://52.59.230.90/users/self/").get();

@@ -1,3 +1,10 @@
+/**
+ * This class is used for signing up. If you sign up, then you'll be redirected to Login to use your credentials in your sign-in.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
 package com.sourcey.materiallogindemo;
 
 import android.app.ProgressDialog;

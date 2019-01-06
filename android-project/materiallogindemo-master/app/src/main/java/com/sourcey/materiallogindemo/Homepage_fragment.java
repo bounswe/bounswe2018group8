@@ -1,3 +1,11 @@
+/**
+ * This class is for homepage feed.
+ *
+ * @author  Berkay Kozan github.com/leblebi1
+ * @version 1.0
+ * @since   2018 October
+ */
+
 package com.sourcey.materiallogindemo;
 
 import android.app.Fragment;
@@ -120,7 +128,18 @@ public class Homepage_fragment extends Fragment {
             int max_price = obj.getInt("max_price");
             int min_price = obj.getInt("min_price");
             Log.d("TAG", ProjectList.size()+"");
-            Project project= new Project(id,title,description,deadline,max_price,min_price,status,client_id,freelancer_id,freelancer_username,client_username);
+            int bid_count = obj.getInt("min_price");
+            int average_bid = obj.getInt("min_price");
+            ArrayList<Bid> bidList= new ArrayList<>();
+            JSONArray jArray = obj.getJSONArray("bids");
+            if (jArray != null) {
+                for (int j=0;j<jArray.length();j++){
+                    JSONObject thisBid= jArray.getJSONObject(j);
+                    Bid bid= new Bid(thisBid.getInt("id"), thisBid.getInt("freelancer_id"), thisBid.getString("freelancer_username"), thisBid.getInt("amount"));
+                    bidList.add(bid);
+                }
+            }
+            Project project= new Project(bid_count, average_bid, id,title,description,deadline,max_price,min_price,status,client_id,freelancer_id,freelancer_username,client_username,bidList);
             ProjectList.add(project);
 
         }
