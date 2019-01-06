@@ -41,6 +41,7 @@ class LoginForm extends React.Component {
     }));
   }
 
+  // @mehmetcalim: this render shows login form.
   render() {
     return (
       <React.Fragment>

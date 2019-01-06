@@ -115,11 +115,12 @@ export default class SelectedProject extends Component {
         }));
     }
 
-
+    // @mehmetcalim: If the user is a guest, redirects her to login/register page.
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
         }
+        // @mehmetcalim: Else shows details of selected project.
         else{
             const { user } = this.props;
             const { isLoading, project } = this.state;

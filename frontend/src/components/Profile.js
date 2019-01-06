@@ -36,6 +36,7 @@ export default class Profile extends Component {
             })
             .catch(error => this.setState({ error, isLoading: false }));
     }
+    // @mehmetcalim: Deposit request is implemented here.
     submit(e) {
         e.preventDefault();
         axios.post('http://52.59.230.90/users/self/deposit/', {
@@ -47,10 +48,12 @@ export default class Profile extends Component {
             })
             .catch(error => this.setState({error, isLoading: false}));
     }
+    // @mehmetcalim: This function handles closing of popup.
     handleClose() {
         this.setState({ show: false });
     }
 
+    // @mehmetcalim: This function handles showing of popup.
     handleShow() {
         if(localStorage.getItem('token')== null){
             this.setState({ show: false });
@@ -69,10 +72,12 @@ export default class Profile extends Component {
           return newState;
         });
     };
+    // @mehmetcalim: If the user is a guest, redirects her to login/register page.
     render() {
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
         }
+    // @mehmetcalim: Else shows the current user profile page.
         else{
             const { isLoading, user } = this.state;
             return (

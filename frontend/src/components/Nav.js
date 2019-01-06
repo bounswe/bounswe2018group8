@@ -5,7 +5,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from "react-bootstrap";
 
-
+/* @mehmetcalim: this nav function behaves like subclass of landing page. 
+   Login and logout functionalities are implemented here.
+*/
 function Nav(props) {
   const wellStyles = { maxWidth: 400, margin: '0 auto 0px' };
 

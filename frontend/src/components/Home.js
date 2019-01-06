@@ -25,7 +25,7 @@ export default class Home extends React.Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
-    // mehmetcalim: this function send get reqeust to get all projects to homepage.
+    // @mehmetcalim: this function send get reqeust to get all projects to homepage.
 
     componentDidMount() {
         axios.get("http://52.59.230.90/projects/")
@@ -37,7 +37,7 @@ export default class Home extends React.Component {
             })
             .catch(error => this.setState({ error, isLoading: false }));
     }
-    // mehmetcalim: these handles for biding popup.
+    // @mehmetcalim: these handles for biding popup.
 
     handleClose() {
         this.setState({ show: false });
@@ -56,7 +56,7 @@ export default class Home extends React.Component {
     updateSearch(event){
         this.setState({search: event.target.value});
     }
-
+    // 
     handle_change = e => {
         const name = e.target.name;
         const value = e.target.value;
@@ -67,7 +67,7 @@ export default class Home extends React.Component {
         });
     };
 
-    // mehmetcalim: this submit function belongs to popup window.
+    // @mehmetcalim: this submit function belongs to project details popup window.
 
     submit(e,id) {
         e.preventDefault();
@@ -86,8 +86,8 @@ export default class Home extends React.Component {
         }));
     }
 
-    //kubraeryılmaz: searching is done by filtering while mapping.
     render() {
+        //kubraeryılmaz: searching is done by filtering while mapping.
         const { searchedString } = this.props;
         const { isLoading, projects } = this.state;
         var project_id;
@@ -95,6 +95,7 @@ export default class Home extends React.Component {
         var url;
         var url2;
         var options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric' }
+        // @mehmetcalim: shows all project details but if the user is a guest, she cannot see owners of projects.
         return (
           <React.Fragment>
             <div className="row">
@@ -116,6 +117,7 @@ export default class Home extends React.Component {
                                 url="/";
                                 url2="/";
                             }
+                        // @mehmetcalim: shows all details of projects.
                         return (
                             <div key={id} className="project">
                                 <p><b>{title}</b></p>

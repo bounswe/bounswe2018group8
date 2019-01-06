@@ -44,7 +44,7 @@ class App extends Component {
           searchedString
       });
   };
-
+  // @mehmetcalim: all pages are defined here.
   render() {
     return (
       <div className="App">

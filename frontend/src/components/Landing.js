@@ -51,7 +51,7 @@ class Landing extends React.Component {
             default:
                 form = null;
         }
-
+        // @mehmetcalim: Login/logout views.
         return (
             <React.Fragment>
             <div className="Landing">

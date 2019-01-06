@@ -35,9 +35,11 @@ export default class ClientProfile extends Component {
         }
     }
     render() {
+        // @mehmetcalim: If the user is guest, redirects her to login/register page.
         if(localStorage.getItem('token')== null){
             return <Redirect to='/' />
         }
+        // @mehmetcalim: Else shows the details of profile of project owner.
         else{
             const { isLoading, user } = this.state;
             return (

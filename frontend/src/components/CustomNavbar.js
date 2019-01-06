@@ -3,6 +3,7 @@ import { Navbar, Nav, NavItem, FormGroup, FormControl, Button } from 'react-boot
 import { Link } from 'react-router-dom';
 import './CustomNavbar.css';
 
+// kubraeryilmaz: custom navigation bar implementation.
 export default class CustomNavbar extends Component {
     render(){
         const { onSearchChanged } = this.props;

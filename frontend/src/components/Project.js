@@ -20,20 +20,9 @@ class Project extends React.Component {
       min_price: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `JWT ${localStorage.getItem('token')}`
-    };
-    this.data = {
-            title: this.state.title,
-            description: this.state.description,
-            deadline: this.state.deadline,
-            max_price: this.state.max_price,
-            min_price: this.state.min_price,
-    };
   }
 
-  //Added for date handling from datepicker.
+  // @ozankinasakal: I added date handling from datepicker.
   handleChange(date) {
       this.setState({
           deadline: date
@@ -75,11 +64,13 @@ class Project extends React.Component {
     }));
   }
 
+  // @mehmetcalim: If the user is a guest, redirects her to login/register page.
   render() {
     var user = localStorage.getItem('user');
     if(localStorage.getItem('token')== null){
         return <Redirect to='/' />
     }
+    // @mehmetcalim: Shows project creation form.
     else{
         return (
         <div className="row">
