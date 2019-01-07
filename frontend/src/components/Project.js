@@ -71,6 +71,7 @@ class Project extends React.Component {
         return <Redirect to='/' />
     }
     // @mehmetcalim: Shows project creation form.
+    // @Kubra Eryılmaz : Added calendar type deadline.
     else{
         return (
         <div className="row">

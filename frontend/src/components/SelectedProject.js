@@ -7,6 +7,10 @@ import { Button, Modal, FormControl, FormGroup, ControlLabel } from 'react-boots
 import './Profile.css';
 import axios from 'axios';
 
+
+/**
+ * @Kubra Eryılmaz: In order to show bidding list to the owner of the project.
+ */
 function BidList({ bids }) {
 
 
@@ -55,6 +59,9 @@ export default class SelectedProject extends Component {
         this.setState({ show: false });
     }
 
+    /*
+    * @Kubra Eryılmaz: Bid button is disabled for the owner of the project.
+    */
     handleShow() {
         if(localStorage.getItem('token')=== null){
             this.setState({ show: false });

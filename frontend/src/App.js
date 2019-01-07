@@ -39,6 +39,9 @@ class App extends Component {
     }
   }
 
+  /*
+  @Kubra I added search bar functionality.
+   */
   handleSearchChange = (searchedString) => {
       this.setState({
           searchedString
