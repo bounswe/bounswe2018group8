@@ -131,6 +131,9 @@ export default class SelectedProject extends Component {
             var url=`/user/${project.client_id}`;
             var deadline=project.deadline;
             var options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric' }
+            if ( project.bid_count == 0){
+                project.average_bid = "no bids";
+            }
             return (
             <React.Fragment>
                 <div className="row">
