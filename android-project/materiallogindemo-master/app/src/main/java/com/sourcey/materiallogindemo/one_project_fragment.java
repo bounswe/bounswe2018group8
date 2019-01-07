@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -60,6 +61,11 @@ public class one_project_fragment extends Fragment {
     public static String token;
     public static String id;
     private static String bid;
+    private static String myUsername;
+    private static String ownerStr;
+    private static String the_status;
+    ArrayList<String> bidList= new ArrayList<>();
+
     TextView title;
     TextView description;
     TextView status;
@@ -69,6 +75,10 @@ public class one_project_fragment extends Fragment {
     TextView bidCount;
     TextView averageBid;
     Button bidButton;
+    Button showBids;
+    Button acceptBid;
+    EditText bidId;
+    TextView inProgress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +88,7 @@ public class one_project_fragment extends Fragment {
         Bundle args = getArguments();
         id = args.getString("pk",""); //Record the id of project
         token = args.getString("token",""); //Record token of person
+        myUsername= args.getString("username", "");
         title=oneProjectView.findViewById(R.id.title);
         description=oneProjectView.findViewById(R.id.description);
         status=oneProjectView.findViewById(R.id.status);
@@ -87,9 +98,27 @@ public class one_project_fragment extends Fragment {
         bidCount=oneProjectView.findViewById(R.id.bidCount);
         averageBid=oneProjectView.findViewById(R.id.averageBid);
         bidButton=oneProjectView.findViewById(R.id.bidButton);
+        showBids= oneProjectView.findViewById(R.id.showBids);
+        bidId= oneProjectView.findViewById(R.id.bid_id);
+        acceptBid= oneProjectView.findViewById(R.id.acceptBid);
+        inProgress=oneProjectView.findViewById(R.id.in_progress_flag);
+        bidId.setVisibility(View.GONE);
+        acceptBid.setVisibility(View.GONE);
+        inProgress.setVisibility(View.GONE);
+        final ListView lv = (ListView)oneProjectView.findViewById(R.id.bidList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                (HomepageActivity)getActivity(),
+                android.R.layout.simple_list_item_1,
+                bidList);
+
+        lv.setAdapter(arrayAdapter);
+        lv.setVisibility(View.GONE);
+
         if(token==(null)|| token==""){
             bidButton.setVisibility(View.GONE);
+            showBids.setVisibility(View.GONE);
         }
+
         bidButton.setOnClickListener(
                 new View.OnClickListener() {
 
@@ -130,7 +159,34 @@ public class one_project_fragment extends Fragment {
                 builder.show();
             }
         });
+        showBids.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+                        lv.setVisibility(View.VISIBLE);
+                        bidId.setVisibility(View.VISIBLE);
+                        acceptBid.setVisibility(View.VISIBLE);
+                    }
 
+                }
+    );
+        acceptBid.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+                        try {
+                            accept_the_bid();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+        );
         try {
             getProject();
         } catch (ExecutionException e) {
@@ -142,11 +198,45 @@ public class one_project_fragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(ownerStr.equals(myUsername)){
+            bidButton.setVisibility(View.GONE);
+            if(the_status.equals("in-progress")){
+                showBids.setVisibility(View.GONE);
+                inProgress.setVisibility(View.VISIBLE);
+            }
+        }
+        else{
+            showBids.setVisibility(View.GONE);
 
+        }
 
 
         return oneProjectView;
     }
+
+    private void accept_the_bid() throws JSONException, ExecutionException, InterruptedException {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Accepting the bid...");
+        progressDialog.show();
+        String bid_id= bidId.getText().toString();
+        JSONObject jsonToPost = new JSONObject();
+        jsonToPost.put("id", bid_id);
+        HttpPostAsyncTask myTask = new HttpPostAsyncTask(jsonToPost, getActivity().getApplicationContext(), token);
+        String theResponse = myTask.execute("http://52.59.230.90/projects/"+id+"/bid/accept/").get();
+        int statusCode = Integer.parseInt(theResponse.substring(0, 3));
+        response = theResponse.substring(3);
+        progressDialog.dismiss();
+        if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+            onGetProjectFailure();
+        }
+        else if(statusCode==HttpURLConnection.HTTP_OK){
+            Toast.makeText(getActivity().getApplicationContext(), "You accepted the bid!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     public void bid(String bid) throws JSONException, ExecutionException, InterruptedException {
         ProgressDialog progressDialog = new ProgressDialog(getActivity(),
@@ -206,11 +296,13 @@ public class one_project_fragment extends Fragment {
 
         title.setText(obj.getString("title"));
         owner.setText("Owner:\n"+obj.getString("client_username"));
+        ownerStr=obj.getString("client_username");
         description.setText(obj.getString("description"));
         deadline.setText("Deadline:\n"+strdate);
         status.setText("Status:\n"+obj.getString("status"));
         averageBid.setText("Average bid:\n"+ obj.getString("average_bid"));
         bidCount.setText("Bid count:\n"+ obj.getString("bid_count"));
+        the_status=obj.getString("status");
         if(obj.getString("status").equals("active")){
             status.setTextColor(Color.GREEN);
         }
@@ -220,6 +312,13 @@ public class one_project_fragment extends Fragment {
         String pricerange="Price range:\n"+obj.getString("min_price")+"-"+obj.getString("max_price");
         price_range.setText(pricerange);
         price_range.setTextColor(Color.YELLOW);
+        JSONArray jArray = obj.getJSONArray("bids");
+        if (jArray != null) {
+            for (int j=0;j<jArray.length();j++){
+                JSONObject thisBid= jArray.getJSONObject(j);
+                bidList.add("id:"+thisBid.getInt("id")+" freelancer_username:"+thisBid.getString("freelancer_username")+" amount:"+thisBid.getInt("amount"));
+            }
+        }
     }
 
 }
