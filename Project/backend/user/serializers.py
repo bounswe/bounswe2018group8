@@ -50,11 +50,13 @@ class SkillSerializer(serializers.ModelSerializer):
 # Extended the UserDetailsSerializer from REST AUTH module to add custom fields and override the update function.
 # Author: Umut Baris Oztunc
 class UserSerializer(UserDetailsSerializer):
-    skills = SkillSerializer(many=True)
+    skills = SkillSerializer(many=True, required=False)
+    balance = serializers.FloatField(required=False)
+    avatar = serializers.ImageField(required=False, read_only=True)
 
     class Meta(UserDetailsSerializer.Meta):
         fields = ('id',) + UserDetailsSerializer.Meta.fields + ('bio', 'skills', 'balance', 'avatar',)
-        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'balance',)
+        read_only_fields = UserDetailsSerializer.Meta.read_only_fields + ('id', 'username', 'email', 'balance', 'avatar',)
         
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
