@@ -73,6 +73,7 @@ public class Workspage_fragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("pk", project_number+"");
                 bundle.putString("token", token);
+                bundle.putString("username", myUsername);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment fragment = (Fragment) new one_project_fragment();

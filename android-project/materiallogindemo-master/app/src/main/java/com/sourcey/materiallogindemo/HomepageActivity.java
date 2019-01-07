@@ -49,6 +49,8 @@ import butterknife.ButterKnife;
 public class HomepageActivity  extends AppCompatActivity{
     private static final String TAG = "HomepageActivity";
     private String token="";
+    private String username;
+    private String JSONuser;
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     private ArrayList<String> projects= new ArrayList<String>();
 
@@ -57,6 +59,20 @@ public class HomepageActivity  extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         ButterKnife.bind(this);
+        if(getIntent().getStringExtra("user")!=null){
+            JSONuser= getIntent().getStringExtra("user");
+            JSONObject json= null;
+            try {
+                json = new JSONObject(JSONuser);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                username= json.getString("username");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         if(getIntent().getStringExtra("token")!=null) {
             token = getIntent().getStringExtra("token");
         }
@@ -218,5 +234,6 @@ public class HomepageActivity  extends AppCompatActivity{
     public String getToken(){
         return token;
     }
+    public String getUsername(){return username;}
 
 }

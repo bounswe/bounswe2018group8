@@ -42,6 +42,7 @@ public class Homepage_fragment extends Fragment {
     public static String response;
     ArrayList<Project> ProjectList = new ArrayList<>();
     public static String token;
+    public static String myUsername;
     public static int project_number;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +51,7 @@ public class Homepage_fragment extends Fragment {
         View homepageView;
         homepageView = inflater.inflate(R.layout.fragment_home_page, container, false);
         token=((HomepageActivity)getActivity()).getToken();
+        myUsername= ((HomepageActivity)getActivity()).getUsername();
         try {
             getProjects();
         } catch (ExecutionException e) {
@@ -71,6 +73,7 @@ public class Homepage_fragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("pk", project_number+"");
                 bundle.putString("token", token);
+                bundle.putString("username", myUsername);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment fragment = (Fragment) new one_project_fragment();
