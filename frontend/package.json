@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "jest-cli": "^23.6.0",
     "prop-types": "^15.6.2",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.4",
@@ -11,12 +13,32 @@
     "react-dom": "^16.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-test-renderer": "^16.7.0",
     "react-text-truncate": "^0.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "jest": "^23.6.0",
+    "jest-enzyme": "^7.0.1"
+  },
+  "setupFiles": [
+    "<rootDir>/src/setupTests.js"
+  ],
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/config/CSSStub.js"
+    }
   }
 }
