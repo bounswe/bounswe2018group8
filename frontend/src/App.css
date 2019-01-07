@@ -1,0 +1,16 @@
+/**
+ * @author Mehmet Calim
+ */
+.App {
+  height: 100%;
+  background-color: #e8ebee;
+}
+
+#root{
+  height: 100%;
+}
+
+input {
+  display: block;
+  margin: 5px 0 5px;
+}

@@ -1,0 +1,17 @@
+/**
+ * @author Mehmet Calim
+ */
+body {
+  margin: 0;
+  padding: 0 !important;
+  font-family: sans-serif;
+  height: 100%;
+}
+select.form-control,
+textarea.form-control,
+input.form-control {
+  font-size: 16px;
+}
+input[type=file] {
+  width: 100%;
+}

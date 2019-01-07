@@ -1,0 +1,29 @@
+/*
+@author: Ozan Kınasakal
+*/
+
+#landing{
+	background: white;
+	padding: 0px 84px 30px 84px;
+	border-radius: 10px;
+	margin-bottom: 50px;
+	margin-top:30px;
+}
+
+.form-logo{
+	height: 150px;
+}
+
+.form-control{
+	background-color: #e8ebee;
+}
+
+.well{
+  background-color: white;
+  border: none;
+  padding: 0px;
+}
+
+.fill{
+  min-height: 450px;
+}

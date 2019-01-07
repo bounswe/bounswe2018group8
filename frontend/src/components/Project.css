@@ -1,0 +1,17 @@
+/*
+@author: Ozan Kınasakal
+*/
+
+#form{
+	background: white;
+	padding: 0px 84px 30px 84px;
+	border-radius: 10px;
+}
+
+textarea{
+	resize: none;
+}
+
+.react-datepicker__input-container input{
+	background-color: #e8ebee;
+}
