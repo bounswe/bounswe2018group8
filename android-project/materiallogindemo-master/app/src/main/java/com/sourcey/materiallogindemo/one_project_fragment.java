@@ -300,7 +300,13 @@ public class one_project_fragment extends Fragment {
         description.setText(obj.getString("description"));
         deadline.setText("Deadline:\n"+strdate);
         status.setText("Status:\n"+obj.getString("status"));
-        averageBid.setText("Average bid:\n"+ obj.getString("average_bid"));
+        String avg_bid= obj.getString("average_bid");
+        if(avg_bid.equals("0.0")){
+            averageBid.setText("Average bid:\nThere are no bids for this project.");
+        }
+        else {
+            averageBid.setText("Average bid:\n" + obj.getString("average_bid"));
+        }
         bidCount.setText("Bid count:\n"+ obj.getString("bid_count"));
         the_status=obj.getString("status");
         if(obj.getString("status").equals("active")){
