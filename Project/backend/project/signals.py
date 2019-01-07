@@ -36,5 +36,8 @@ def update_bid_info_on_delete(sender, instance, *args, **kwargs):
     total = project.bid_count * project.average_bid
     total -= instance.amount
     project.bid_count -= 1
-    project.average_bid = total / project.bid_count
+    if project.bid_count == 0:
+        project.average_bid = 0.0
+    else:
+        project.average_bid = total / project.bid_count
     project.save()
